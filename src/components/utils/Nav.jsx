@@ -22,6 +22,7 @@ import {
   SmallCloseIcon
 } from "@chakra-ui/icons";
 import { FaTh, FaBars } from 'react-icons/fa';
+import { TbChecklist } from 'react-icons/tb'
 
 const Nav = ({ 
   side, 
@@ -33,7 +34,7 @@ const Nav = ({
   
   const iconStyle = {
     bgColor: 'transparent',
-    fontSize: '1.2rem',
+    fontSize: ['1rem', null, null, '1.2rem'],
     borderRadius: '100%'
   }
 
@@ -74,9 +75,16 @@ const Nav = ({
         
         <Link to='/'>
           <Heading  sx={{
-            fontSize: ['1.2rem', null, null, '1.5rem'],
+            fontSize: ['1rem', null, null, '1.5rem'],
             fontWeight: '500'
-            }}><i className="bi bi-journal-check"></i>KipNote
+            }}><IconButton sx={{
+              fontSize: ['2rem', null, null, '2.5rem'],
+              bg: 'transparent',
+              cursor: 'auto',
+              _hover: {
+                bg: 'transparent'
+              }
+            }} icon={<TbChecklist />}/>KipNote
           </Heading>
         </Link>
       </Flex>

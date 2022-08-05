@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react/";
 import { BellIcon } from "@chakra-ui/icons";
 import { 
-    FaThumbtack, 
     FaUserPlus, 
     FaEllipsisV, 
     FaArchive 
@@ -27,12 +26,7 @@ const Archive = ({
     note,
     setNote,
     onOpen 
-}) => {
-    const buttonStyle = {
-        bg: 'transparent',
-        border: 'none'
-    }
-    
+}) => {    
     const textStyle ={
         minH: '30px',
         padding: '10px',
@@ -80,17 +74,6 @@ const Archive = ({
                 <Text sx={{
                     pl: '10px'
                 }}>{archiveNote.title}</Text>
-
-                <Tooltip label={archiveNote.pin ? 'Unpin Note' : 'Pin Note'}>
-                    <IconButton
-                        onClick={() => {
-                            pin(archiveNote.id)
-                        }} 
-                        icon={<FaThumbtack />}
-                        sx={buttonStyle}
-                        borderRadius={'100%'} 
-                    />
-                </Tooltip>
             </Flex>
 
             <Box sx={textStyle}>{archiveNote.body}</Box>

@@ -10,7 +10,7 @@ const TodoHeader = () => {
             mb: '5px'
         }}>Todo List</Heading>
         <Text sx={{
-          fontSize: '1.2rem',
+          fontSize: ['1rem', null, null, null, '1.2rem'],
           textAlign: 'center',
           mb: '40px'
         }}>keep track of your daily to-do activities</Text>

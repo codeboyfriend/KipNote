@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
 import theme from "./theme";
-import Nav from "./components/utils/Nav";
-import Sidebar from "./components/utils/Sidebar";
 import Note from "./components/pages/Note";
 import Archives from "./components/pages/Archives";
 import Label from "./components/Label";
 import TodoPage from "./components/pages/TodoPage";
+import Signup from "./components/pages/Signup";
+import Login from "./components/pages/Login";
+import ForgotPass from "./components/pages/ForgotPass";
 
 function App() {
   const [side, setSide] = useState(true);
@@ -22,6 +23,7 @@ function App() {
   );
   const [todoInput, setTodoInput] = useState('');
   const [allNote, setAllNote] = useState([]);
+  const [labelInput, setLabelInput] = useState('')
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   useEffect(() => {
@@ -90,6 +92,10 @@ function App() {
     )
   }
 
+  const handleLabel = (id) => {
+    setLabelInput(id.text)
+  }
+
   const handlePinNote = () => {
     setPinNotes(
       note.filter(each => each.pin === true && each.archive === false ? {
@@ -132,33 +138,24 @@ function App() {
   return (
     <Router>
       <ChakraProvider theme={theme}>
-        <Nav 
-          side={side} 
-          setSide={setSide}
-          gridView={gridView}
-          setGridView={setGridView}
-        />
-        <Sidebar 
-          side={side} 
-          setSide={setSide} 
-          onOpen={onOpen}  
-        />
-
         <Label 
           isOpen={isOpen} 
           onClose={onClose}
           modalInput={modalInput}
           setModalInput={setModalInput}
           modalContent={modalContent}
-          setModalContent={setModalContent} 
+          setModalContent={setModalContent}
+          handleLabel={handleLabel} 
         />
         
         <Routes>
-          <Route path="/" element={<Note
+          <Route path="/home" element={<Note
             note={note}
             setNote={setNote} 
             side={side}
+            setSide={setSide}
             gridView={gridView}
+            setGridView={setGridView}
             title={title}
             body={body}
             setTitle={setTitle}
@@ -169,28 +166,40 @@ function App() {
             pinNotes={pinNotes}
             onOpen={onOpen} 
             allNote = {allNote}
+            labelInput={labelInput}
+            setLabelInput={setLabelInput}
           />} />
 
           <Route path="/todos" element={<TodoPage
             todos={todos}
             setTodos={setTodos}
             side={side}
+            setSide={setSide}
+            gridView={gridView}
+            setGridView={setGridView}
             toggleCompleted={toggleCompleted}
             todoInput={todoInput}
             setTodoInput={setTodoInput}
+            onOpen={onOpen}
           />} />
 
           <Route path="/archive" element={<Archives
             note={note}
             setNote={setNote} 
             side={side}
+            setSide={setSide}
             archiveNotes={archiveNotes}
             gridView={gridView}
+            setGridView={setGridView}
             toggle={toggleReminder}
             pin={togglePin}
             archive={toggleArchive}
             onOpen={onOpen}
           />} />
+
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/forgot" element={<ForgotPass />} />
         </Routes>
       </ChakraProvider>
     </Router>

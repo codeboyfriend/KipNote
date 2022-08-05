@@ -10,9 +10,11 @@ import {
     IconButton,
     HStack,
     Flex,
-    useToast
+    useToast,
+    Text,
+    Icon
 } from "@chakra-ui/react/";
-import { BellIcon, CheckIcon } from "@chakra-ui/icons";
+import { BellIcon, CheckIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { 
     FaUserPlus, 
     FaEllipsisV, 
@@ -30,7 +32,10 @@ const NoteInput = ({
     body,
     setBody,
     note,
-    setNote 
+    setNote,
+    onOpen,
+    labelInput,
+    setLabelInput 
 }) => {
     const boxElement = useRef();
     const toast = useToast();
@@ -100,6 +105,35 @@ const NoteInput = ({
                 onKeyUp={(e) => setBody(boxElement.current?.innerText)} 
                 contentEditable>Take Note...
             </Box>
+
+            <Flex sx={{
+                p: '0 10px'
+            }}>
+                <Box>
+                    {
+                        labelInput !== "" ? 
+                        <Flex sx={{
+                            border: '1px solid',
+                            borderRadius: '15px',
+                            p: '1px 5px',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <Text 
+                                sx={{
+                                    fontSize: '.8rem'
+                                }}>{labelInput}
+                            </Text>
+                            <Box>
+                                <Icon onClick={() => setLabelInput('')} sx={{
+                                    cursor: 'pointer',
+                                    ml: '5px'
+                                }} children={<SmallCloseIcon />} />
+                            </Box>
+                        </Flex> : ""
+                    }
+                </Box>
+            </Flex>
         </Box>
 
         <HStack spacing={[2, null, null, null, 5]}>
@@ -120,7 +154,7 @@ const NoteInput = ({
                     listStyleType: 'none',
                     overflow: 'hidden'
                 }}>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}>Add Label</PopoverBody>
+                    <PopoverBody sx={listStyle} cursor={'pointer'}><Text onClick={onOpen}>Add Label</Text></PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Add Drawing</PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Show Checkboxes</PopoverBody>
                 </PopoverContent>

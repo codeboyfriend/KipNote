@@ -23,7 +23,8 @@ const Label = ({
     modalInput,
     setModalInput,
     modalContent,
-    setModalContent 
+    setModalContent,
+    handleLabel 
 }) => {
     const initialRef = useRef(null);
     const modalStyle = {
@@ -95,12 +96,12 @@ const Label = ({
                                     pl={0}
                                     children={<CgTag />} 
                                 />
-                                    <Input 
-                                        onClick={() => console.log('What')}
+                                    <Input
+                                        onClick={() => handleLabel(content)}
                                         type={'text'}
                                         variant={'flushed'}
                                         defaultValue={content.text}
-                                        pointerEvents={'stroke'}
+                                        cursor={'pointer'}
                                     />
                                 <InputRightAddon
                                     onClick={() => {

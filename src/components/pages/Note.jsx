@@ -2,6 +2,8 @@ import { Box } from "@chakra-ui/react";
 import NoteInput from "../NoteInput";
 import Items from "../Items";
 import PinNotes from "../PinNotes";
+import Nav from "../utils/Nav";
+import Sidebar from "../utils/Sidebar";
 
 const Note = ({
     note,
@@ -17,7 +19,11 @@ const Note = ({
     archive,
     pinNotes,
     onOpen,
-    allNote 
+    allNote,
+    setSide,
+    setGridView,
+    labelInput,
+    setLabelInput 
 }) => {
 
     const buttonStyle = {
@@ -56,58 +62,75 @@ const Note = ({
     }
 
   return (
-    <Box sx={{
-        w: ['70%', null, null, '55%', '50%'],
-        mt: '120px',
-        transition: 'margin .2s',
-    }} ml={side ? ['90px', null, null, null, '180px'] : ['90px', null, null, '220px', '350px']}>
-        <NoteInput
-            note={note} 
-            side={side}
-            setNote={setNote}
-            buttonStyle={buttonStyle}
-            iconStyle={iconStyle}
-            listStyle={listStyle} 
-            stackStyle={stackStyle}
-            title={title}
-            body={body}
-            setTitle={setTitle}
-            setBody={setBody}
-            onOpen={onOpen}
+    <Box>
+        <Nav 
+            side={side} 
+            setSide={setSide}
+            gridView={gridView}
+            setGridView={setGridView}
         />
 
-        <PinNotes
-            note={note}
-            setNote={setNote}
-            pinNotes={pinNotes}
-            side={side}
-            buttonStyle={buttonStyle}
-            textStyle={textStyle}
-            iconStyle={iconStyle}
-            listStyle={listStyle} 
-            stackStyle={stackStyle}
-            gridView={gridView} 
-            toggle={toggle}
-            pin={pin}
-            archive={archive}
-            onOpen={onOpen} 
+        <Sidebar 
+          side={side} 
+          setSide={setSide} 
+          onOpen={onOpen}  
         />
 
-        <Items 
-            allNote={allNote}
-            setNote={setNote}
-            side={side}
-            buttonStyle={buttonStyle}
-            textStyle={textStyle}
-            iconStyle={iconStyle}
-            listStyle={listStyle} 
-            stackStyle={stackStyle}
-            gridView={gridView} 
-            toggle={toggle}
-            pin={pin}
-            archive={archive}
-            onOpen={onOpen} 
-        />
+        <Box sx={{
+            w: ['70%', null, null, '55%', '50%'],
+            mt: '120px',
+            transition: 'margin .2s',
+        }} ml={side ? ['90px', null, null, null, '180px'] : ['90px', null, null, '220px', '350px']}>
+            <NoteInput
+                note={note} 
+                side={side}
+                setNote={setNote}
+                buttonStyle={buttonStyle}
+                iconStyle={iconStyle}
+                listStyle={listStyle} 
+                stackStyle={stackStyle}
+                title={title}
+                body={body}
+                setTitle={setTitle}
+                setBody={setBody}
+                onOpen={onOpen}
+                labelInput={labelInput}
+                setLabelInput={setLabelInput}
+            />
+
+            <PinNotes
+                note={note}
+                setNote={setNote}
+                pinNotes={pinNotes}
+                side={side}
+                buttonStyle={buttonStyle}
+                textStyle={textStyle}
+                iconStyle={iconStyle}
+                listStyle={listStyle} 
+                stackStyle={stackStyle}
+                gridView={gridView} 
+                toggle={toggle}
+                pin={pin}
+                archive={archive}
+                onOpen={onOpen} 
+            />
+
+            <Items 
+                allNote={allNote}
+                setNote={setNote}
+                side={side}
+                buttonStyle={buttonStyle}
+                textStyle={textStyle}
+                iconStyle={iconStyle}
+                listStyle={listStyle} 
+                stackStyle={stackStyle}
+                gridView={gridView} 
+                toggle={toggle}
+                pin={pin}
+                archive={archive}
+                onOpen={onOpen} 
+            />
+        </Box>
     </Box>
   )
 }

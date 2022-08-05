@@ -44,7 +44,7 @@ const Sidebar = ({ side, onOpen }) => {
         w= {side ? '80px' : ['200px', null, null, null, '200px']}
        
     >
-       <Link to='/'>
+       <Link to='/home'>
             <Flex sx={flexStyle}>
                 <IconButton sx={iconStyle} icon={<FaRegLightbulb />} />
                 <Text sx={textStyle} display={side ? 'none' : 'block'}>Notes</Text>
