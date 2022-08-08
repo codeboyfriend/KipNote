@@ -14,7 +14,8 @@ const PinNotes = ({
   toggle,
   pin,
   archive,
-  onOpen 
+  onOpen,
+  toggleDelete 
 }) => {
   return pinNotes.length > 0 ? (
     <Box mb={'50px'}>
@@ -37,7 +38,8 @@ const PinNotes = ({
           toggle={toggle}
           pin={pin}
           archive={archive}
-          onOpen={onOpen} 
+          onOpen={onOpen}
+          toggleDelete={toggleDelete} 
         />)}
       </Box>
     </Box>

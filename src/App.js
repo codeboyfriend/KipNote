@@ -4,11 +4,14 @@ import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
 import theme from "./theme";
 import Note from "./components/pages/Note";
 import Archives from "./components/pages/Archives";
+import Deletes from "./components/pages/Deletes";
 import Label from "./components/Label";
 import TodoPage from "./components/pages/TodoPage";
 import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import ForgotPass from "./components/pages/ForgotPass";
+import Update from "./components/pages/Update";
+import Help from "./components/pages/Help";
 
 function App() {
   const [side, setSide] = useState(true);
@@ -17,18 +20,20 @@ function App() {
   const [body, setBody] = useState('Take Note...');
   const [pinNotes, setPinNotes] = useState([]);
   const [archiveNotes, setArchiveNotes] = useState([]);
+  const [deleteNotes, setDeleteNotes] = useState([]);
   const [modalInput, setModalInput] = useState('');
   const [modalContent, setModalContent] = useState(
     () => JSON.parse(localStorage.getItem('modalContent')) || []
   );
   const [todoInput, setTodoInput] = useState('');
   const [allNote, setAllNote] = useState([]);
-  const [labelInput, setLabelInput] = useState('')
+  const [labelInput, setLabelInput] = useState('');
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     localStorage.setItem('modalContent', JSON.stringify(modalContent))
-  }, [modalContent])
+  }, [modalContent]);
 
   const [note, setNote] = useState([
     {
@@ -37,7 +42,9 @@ function App() {
       body: 'I started learning firebase three days ago',
       reminder: true,
       pin: true,
-      archive: true
+      archive: true,
+      delete: false,
+      label: 'testing'
     },
     {
       id: 2,
@@ -45,7 +52,9 @@ function App() {
       body: 'It is really an amazing CSS framework',
       reminder: false,
       pin: false,
-      archive: false
+      archive: false,
+      delete: false,
+      label: 'testing'
     },
     {
       id: 3,
@@ -53,7 +62,9 @@ function App() {
       body: 'It is one of the top programming language',
       reminder: false,
       pin: false,
-      archive: false
+      archive: false,
+      delete: false,
+      label: 'testing'
     }
   ]);
 
@@ -92,13 +103,31 @@ function App() {
     )
   }
 
+  const toggleDelete = (id) => {
+    setNote(
+      note.map((each) => 
+        each.id === id ? {...each, delete: 
+        !each.delete} : each
+      )
+    )
+  }
+
+  const labelhandler = (id) => {
+    setNote(
+      note.map((each) => 
+      each.id === id ? {...each, label:
+      labelInput} : each
+      )
+    )
+  }
+
   const handleLabel = (id) => {
     setLabelInput(id.text)
   }
 
   const handlePinNote = () => {
     setPinNotes(
-      note.filter(each => each.pin === true && each.archive === false ? {
+      note.filter(each => each.pin === true && each.archive === false && each.delete === false ? {
         ...each
       } : null)
     )
@@ -106,11 +135,23 @@ function App() {
 
   const handleArchive = () => {
     setArchiveNotes(
-      note.filter(each => each.archive === true ? {
+      note.filter(each => each.archive === true && each.delete === false ? {
         ...each
       } : null)
     )
   }
+
+  const handleDeleteNote = () => {
+    setDeleteNotes(
+      note.filter(each => each.delete === true ? {
+        ...each
+      } : null)
+    )
+  }
+
+  setInterval(() => {
+    deleteNotes.shift()
+  }, 604800000);
 
   const toggleCompleted = (id) => {
     setTodos(
@@ -121,9 +162,17 @@ function App() {
     )
   }
 
+  const filterNote = () => {
+    setAllNote(
+      note.filter(each => each.title === searchInput ? {
+        ...each
+      } : null)
+    )
+  }
+
   const handleAllNote = () => {
     setAllNote(
-      note.filter(each => each.archive === false && each.pin === false ? {
+      note.filter(each => each.archive === false && each.pin === false && each.delete === false ? {
         ...each 
       } : null)
     )
@@ -132,9 +181,10 @@ function App() {
   useEffect(() => {
     handlePinNote();
     handleArchive();
+    handleDeleteNote();
     handleAllNote();
   }, [note])
-
+ 
   return (
     <Router>
       <ChakraProvider theme={theme}>
@@ -145,7 +195,8 @@ function App() {
           setModalInput={setModalInput}
           modalContent={modalContent}
           setModalContent={setModalContent}
-          handleLabel={handleLabel} 
+          handleLabel={handleLabel}
+          labelhandler={labelhandler}
         />
         
         <Routes>
@@ -160,14 +211,19 @@ function App() {
             body={body}
             setTitle={setTitle}
             setBody={setBody}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
             toggle={toggleReminder}
             pin={togglePin}
             archive={toggleArchive}
+            toggleDelete={toggleDelete}
             pinNotes={pinNotes}
             onOpen={onOpen} 
             allNote = {allNote}
             labelInput={labelInput}
             setLabelInput={setLabelInput}
+            labelhandler={labelhandler}
+            filterNote={filterNote}
           />} />
 
           <Route path="/todos" element={<TodoPage
@@ -181,6 +237,9 @@ function App() {
             todoInput={todoInput}
             setTodoInput={setTodoInput}
             onOpen={onOpen}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            filterNote={filterNote}
           />} />
 
           <Route path="/archive" element={<Archives
@@ -194,12 +253,28 @@ function App() {
             toggle={toggleReminder}
             pin={togglePin}
             archive={toggleArchive}
+            toggleDelete={toggleDelete}
             onOpen={onOpen}
           />} />
+
+          <Route path='/trash' element={<Deletes 
+            note={note}
+            setNote={setNote} 
+            side={side}
+            setSide={setSide}
+            deleteNotes={deleteNotes}
+            gridView={gridView}
+            setGridView={setGridView}
+            toggleDelete={toggleDelete}
+            onOpen={onOpen}
+          />} 
+          />
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Login />} />
           <Route path="/forgot" element={<ForgotPass />} />
+          <Route path="/update" element={<Update />} />
+          <Route path="/help" element={<Help />} />
         </Routes>
       </ChakraProvider>
     </Router>

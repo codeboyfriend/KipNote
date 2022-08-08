@@ -31,12 +31,13 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         signInWithEmailAndPassword(auth, loginEmail, loginPassword)
         .then((response) => {
           navigate('/home')
         })
         .catch((err) => {
-            setError('Wrong Entries')
+            setError('An error occur')
         })
 
         setLoginEmail('');
@@ -65,6 +66,7 @@ const Login = () => {
                   fontSize: '2.5rem',
                   bg: 'transparent',
                   cursor: 'auto',
+                  color: '#c5341b',
                   _hover: {
                     bg: 'transparent'
                   }
@@ -121,7 +123,11 @@ const Login = () => {
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}  
                     />
-                    <InputRightAddon onClick={() => setView(!view)} children={view ? <ViewOffIcon /> : <ViewIcon /> } />
+                    <InputRightAddon
+                      cursor={'pointer'} 
+                      onClick={() => setView(!view)} 
+                      children={view ? <ViewOffIcon /> : <ViewIcon /> } 
+                    />
                 </InputGroup>
               </FormControl>
     

@@ -55,12 +55,14 @@ const NoteInput = ({
                 body: body, 
                 reminder: false, 
                 pin: false, 
-                archive: false, 
+                archive: false,
+                delete: false, 
                 id: Math.floor(Math.random() * 1000) 
             }
         ]);
 
         setTitle('');
+        setBody('');
     }
     
     const handleSubmit = () => {
@@ -102,9 +104,13 @@ const NoteInput = ({
             <Box 
                 sx={textStyle} 
                 ref={boxElement} 
+                label={"Testing"}
                 onKeyUp={(e) => setBody(boxElement.current?.innerText)} 
                 contentEditable>Take Note...
             </Box>
+
+            {/* <textarea height={'fit-content'}></textarea> */}
+            {/* <input type="text"  height={'fit-content'}/> */}
 
             <Flex sx={{
                 p: '0 10px'
@@ -115,13 +121,13 @@ const NoteInput = ({
                         <Flex sx={{
                             border: '1px solid',
                             borderRadius: '15px',
-                            p: '1px 5px',
+                            p: '0 5px',
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
                             <Text 
                                 sx={{
-                                    fontSize: '.8rem'
+                                    fontSize: '.7rem'
                                 }}>{labelInput}
                             </Text>
                             <Box>
@@ -154,7 +160,11 @@ const NoteInput = ({
                     listStyleType: 'none',
                     overflow: 'hidden'
                 }}>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}><Text onClick={onOpen}>Add Label</Text></PopoverBody>
+                    <PopoverBody 
+                        sx={listStyle} 
+                        cursor={'pointer'}>
+                            <Text onClick={onOpen}>Add Label</Text>
+                    </PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Add Drawing</PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Show Checkboxes</PopoverBody>
                 </PopoverContent>

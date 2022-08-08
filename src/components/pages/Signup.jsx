@@ -74,6 +74,7 @@ const Signup = () => {
               fontSize: '2.5rem',
               bg: 'transparent',
               cursor: 'auto',
+              color: '#c5341b',
               _hover: {
                 bg: 'transparent'
               }
@@ -130,7 +131,11 @@ const Signup = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputRightAddon onClick={() => setView(!view)} children={view ? <ViewOffIcon /> : <ViewIcon /> } />
+              <InputRightAddon 
+                cursor={'pointer'} 
+                onClick={() => setView(!view)} 
+                children={view ? <ViewOffIcon /> : <ViewIcon /> } 
+              />
             </InputGroup>
           </FormControl>
 
@@ -144,7 +149,11 @@ const Signup = () => {
                 value={passwordCon}
                 onChange={(e) => setPasswordCon(e.target.value)}
               />
-              <InputRightAddon onClick={() => setViewCon(!viewCon)} children={viewCon ? <ViewOffIcon /> : <ViewIcon /> } />
+              <InputRightAddon 
+                cursor={'pointer'} 
+                onClick={() => setViewCon(!viewCon)} 
+                children={viewCon ? <ViewOffIcon /> : <ViewIcon /> } 
+              />
             </InputGroup>
           </FormControl>
 

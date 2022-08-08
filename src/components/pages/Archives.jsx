@@ -20,7 +20,8 @@ const Archives = ({
   archive,
   note,
   setNote,
-  onOpen 
+  onOpen,
+  toggleDelete
 }) => {
   const noStyle = {
     fontSize: ['7rem', null, '8rem', null,  '10rem'],
@@ -65,7 +66,8 @@ const Archives = ({
                   archive={archive}
                   note={note}
                   setNote={setNote} 
-                  onOpen={onOpen} 
+                  onOpen={onOpen}
+                  toggleDelete={toggleDelete} 
                 />)}
               </Box>
           </Box>

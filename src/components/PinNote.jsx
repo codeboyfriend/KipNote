@@ -31,12 +31,9 @@ const PinNote = ({
     toggle,
     pin,
     archive,
-    onOpen 
+    onOpen,
+    toggleDelete 
 }) => {
-    const handleDeleteNote = () => {
-        setNote(note.filter((el) => el.id !== pinNote.id))
-    }
-
   return (
     <Stack 
         sx={stackStyle}
@@ -84,10 +81,23 @@ const PinNote = ({
                     listStyleType: 'none',
                     overflow: 'hidden'
                 }}>
-                    <PopoverBody onClick={handleDeleteNote} sx={listStyle} cursor={'pointer'}>Delete note</PopoverBody>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}><Text onClick={onOpen}>Add Label</Text></PopoverBody>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}>Add Drawing</PopoverBody>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}>Show Checkboxes</PopoverBody>
+                    <PopoverBody 
+                        onClick={() => toggleDelete(pinNote.id)} 
+                        sx={listStyle} cursor={'pointer'}>Delete note
+                    </PopoverBody>
+                    <PopoverBody 
+                        sx={listStyle} 
+                        cursor={'pointer'}>
+                            <Text onClick={onOpen}>Add Label</Text>
+                    </PopoverBody>
+                    <PopoverBody 
+                        sx={listStyle} 
+                        cursor={'pointer'}>Add Drawing
+                    </PopoverBody>
+                    <PopoverBody 
+                        sx={listStyle} 
+                        cursor={'pointer'}>Show Checkboxes
+                    </PopoverBody>
                 </PopoverContent>
             </Popover>
             <Tooltip label={pinNote.archive ? 'Unarchive' : 'Archive'}>

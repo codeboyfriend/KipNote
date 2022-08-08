@@ -20,7 +20,8 @@ const Items = ({
     pin,
     archive,
     onOpen,
-    allNote
+    allNote,
+    toggleDelete
 }) => {
     const noStyle = {
         fontSize: ['7rem', null, '8rem', null,  '10rem'],
@@ -54,7 +55,9 @@ const Items = ({
                 pin={pin}
                 archive={archive}
                 onOpen={onOpen} 
-            />))}
+                toggleDelete={toggleDelete}
+            />
+            ))}
         </Box>
     </Box>
   ) : (

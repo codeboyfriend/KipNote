@@ -23,7 +23,12 @@ const Note = ({
     setSide,
     setGridView,
     labelInput,
-    setLabelInput 
+    setLabelInput,
+    toggleDelete,
+    labelhandler,
+    searchInput,
+    setSearchInput,
+    filterNote 
 }) => {
 
     const buttonStyle = {
@@ -68,6 +73,9 @@ const Note = ({
             setSide={setSide}
             gridView={gridView}
             setGridView={setGridView}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            filterNote={filterNote}
         />
 
         <Sidebar 
@@ -112,7 +120,11 @@ const Note = ({
                 toggle={toggle}
                 pin={pin}
                 archive={archive}
-                onOpen={onOpen} 
+                toggleDelete={toggleDelete}
+                onOpen={onOpen}
+                labelInput={labelInput}
+                setLabelInput={setLabelInput}
+                labelhandler={labelhandler} 
             />
 
             <Items 
@@ -128,6 +140,7 @@ const Note = ({
                 toggle={toggle}
                 pin={pin}
                 archive={archive}
+                toggleDelete={toggleDelete}
                 onOpen={onOpen} 
             />
         </Box>

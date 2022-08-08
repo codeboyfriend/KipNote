@@ -21,11 +21,11 @@ import {
 const Archive = ({ 
     archiveNote,
     toggle,
-    pin,
     archive,
     note,
     setNote,
-    onOpen 
+    onOpen,
+    toggleDelete 
 }) => {    
     const textStyle ={
         minH: '30px',
@@ -55,10 +55,6 @@ const Archive = ({
         boxShadow: '1px 1px 2px #000',
         padding: '10px',
         overflow: 'hidden'
-    }
-
-    const handleDeleteNote = () => {
-        setNote(note.filter((el) => el.id !== archiveNote.id))
     }
 
   return (
@@ -97,8 +93,16 @@ const Archive = ({
                     listStyleType: 'none',
                     overflow: 'hidden'
                 }}>
-                    <PopoverBody onClick={handleDeleteNote} sx={listStyle} cursor={'pointer'}>Delete note</PopoverBody>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}><Text onClick={onOpen}>Add Label</Text></PopoverBody>
+                    <PopoverBody 
+                        onClick={() => toggleDelete(archiveNote.id)} 
+                        sx={listStyle} 
+                        cursor={'pointer'}>Delete note
+                    </PopoverBody>
+                    <PopoverBody 
+                        sx={listStyle} 
+                        cursor={'pointer'}>
+                            <Text onClick={onOpen}>Add Label</Text>
+                    </PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Add Drawing</PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Show Checkboxes</PopoverBody>
                 </PopoverContent>

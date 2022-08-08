@@ -15,7 +15,7 @@ import {
     Button
 } from "@chakra-ui/react";
 import { CheckIcon, SmallCloseIcon, DeleteIcon } from "@chakra-ui/icons";
-import { CgTag } from 'react-icons/cg'
+import { CgTag } from 'react-icons/cg';
 
 const Label = ({ 
     isOpen, 
@@ -24,7 +24,8 @@ const Label = ({
     setModalInput,
     modalContent,
     setModalContent,
-    handleLabel 
+    handleLabel,
+    labelhandler 
 }) => {
     const initialRef = useRef(null);
     const modalStyle = {
@@ -97,7 +98,7 @@ const Label = ({
                                     children={<CgTag />} 
                                 />
                                     <Input
-                                        onClick={() => handleLabel(content)}
+                                        onClick={() => labelhandler(content)}
                                         type={'text'}
                                         variant={'flushed'}
                                         defaultValue={content.text}

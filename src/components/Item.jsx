@@ -31,12 +31,9 @@ const Item = ({
     toggle,
     pin,
     archive,
-    onOpen
+    onOpen,
+    toggleDelete
 }) => {
-
-    const handleDeleteNote = () => {
-        setNote(note.filter((el) => el.id !== each.id))
-    }
 
   return (
     <Stack 
@@ -65,6 +62,7 @@ const Item = ({
             </Flex>
 
             <Box sx={textStyle}>{each.body}</Box>
+            <Box>{each.label}</Box>
         </Box>
 
         <HStack spacing={[2, null, null, null, 5]}>
@@ -85,8 +83,16 @@ const Item = ({
                     listStyleType: 'none',
                     overflow: 'hidden'
                 }}>
-                    <PopoverBody onClick={handleDeleteNote} sx={listStyle} cursor={'pointer'}>Delete note</PopoverBody>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}><Text onClick={onOpen}>Add Label</Text></PopoverBody>
+                    <PopoverBody 
+                        onClick={() => toggleDelete(each.id)} 
+                        sx={listStyle} 
+                        cursor={'pointer'}>Delete note
+                    </PopoverBody>
+                    <PopoverBody 
+                        sx={listStyle} 
+                        cursor={'pointer'}>
+                        <Text onClick={onOpen}>Add Label</Text>
+                    </PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Add Drawing</PopoverBody>
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Show Checkboxes</PopoverBody>
                 </PopoverContent>

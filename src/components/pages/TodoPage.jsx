@@ -15,7 +15,11 @@ const TodoPage = ({
     onOpen,
     toggleCompleted,
     todoInput,
-    setTodoInput
+    setTodoInput,
+    email,
+    filterNote,
+    searchInput,
+    setSearchInput
 }) => {
   return (
     <Box>
@@ -24,6 +28,10 @@ const TodoPage = ({
           setSide={setSide}
           gridView={gridView}
           setGridView={setGridView}
+          email={email}
+          filterNote={filterNote}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
         />
         <Sidebar 
           side={side} 
@@ -38,17 +46,17 @@ const TodoPage = ({
             <TodoHeader />
 
             <Todos 
-                todos={todos}
-                setTodos={setTodos}
-                side={side}
-                toggleCompleted={toggleCompleted} 
+              todos={todos}
+              setTodos={setTodos}
+              side={side}
+              toggleCompleted={toggleCompleted} 
             />
 
             <AddTodo 
-                todos={todos}
-                setTodos={setTodos}
-                todoInput={todoInput}
-                setTodoInput={setTodoInput}
+              todos={todos}
+              setTodos={setTodos}
+              todoInput={todoInput}
+              setTodoInput={setTodoInput}
             />
         </Box>
     </Box>
