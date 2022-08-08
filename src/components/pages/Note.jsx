@@ -4,6 +4,10 @@ import Items from "../Items";
 import PinNotes from "../PinNotes";
 import Nav from "../utils/Nav";
 import Sidebar from "../utils/Sidebar";
+import Search from "../utils/Search";
+import { app } from "../../firebaseConfig";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
 
 const Note = ({
     note,
@@ -28,8 +32,22 @@ const Note = ({
     labelhandler,
     searchInput,
     setSearchInput,
-    filterNote 
+    filterNote,
+    filterSearch,
+    showModal,
+    setShowModal 
 }) => {
+    const auth = getAuth();
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              const uid = user.uid;
+            } else {
+              console.log('an error occur')
+            }
+        });
+    }, [])
 
     const buttonStyle = {
         bg: 'transparent',
@@ -62,8 +80,7 @@ const Note = ({
         border: '1px solid',
         borderRadius: '5px',
         boxShadow: '1px 1px 2px #000',
-        padding: '10px',
-        overflow: 'hidden'
+        padding: '10px'
     }
 
   return (
@@ -76,6 +93,8 @@ const Note = ({
             searchInput={searchInput}
             setSearchInput={setSearchInput}
             filterNote={filterNote}
+            showModal={showModal}
+            setShowModal={setShowModal}
         />
 
         <Sidebar 
@@ -87,7 +106,7 @@ const Note = ({
         <Box sx={{
             w: ['70%', null, null, '55%', '50%'],
             mt: '120px',
-            transition: 'margin .2s',
+            transition: 'margin .2s'
         }} ml={side ? ['90px', null, null, null, '180px'] : ['90px', null, null, '220px', '350px']}>
             <NoteInput
                 note={note} 
@@ -125,6 +144,24 @@ const Note = ({
                 labelInput={labelInput}
                 setLabelInput={setLabelInput}
                 labelhandler={labelhandler} 
+            />
+
+            <Search
+                filterSearch={filterSearch}
+                buttonStyle={buttonStyle}
+                textStyle={textStyle}
+                stackStyle={stackStyle}
+                toggle={toggle}
+                pin={pin}
+                archive={archive}
+                toggleDelete={toggleDelete}
+                iconStyle={iconStyle}
+                listStyle={listStyle}
+                onOpen={onOpen}
+                showModal={showModal}
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+                filterNote={filterNote}
             />
 
             <Items 

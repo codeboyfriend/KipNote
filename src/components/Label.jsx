@@ -98,7 +98,7 @@ const Label = ({
                                     children={<CgTag />} 
                                 />
                                     <Input
-                                        onClick={() => labelhandler(content)}
+                                        onClick={() => handleLabel(content)}
                                         type={'text'}
                                         variant={'flushed'}
                                         defaultValue={content.text}

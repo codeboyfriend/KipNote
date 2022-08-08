@@ -5,7 +5,7 @@ import {
   IconButton, 
   Heading, 
   Input, 
-  InputLeftAddon, 
+  InputRightAddon, 
   InputGroup,
   Tooltip, 
   Popover,
@@ -29,9 +29,15 @@ import {
   HamburgerIcon, 
   Search2Icon, 
   SettingsIcon,
-  SmallCloseIcon
+  SmallCloseIcon,
+  CloseIcon
 } from "@chakra-ui/icons";
-import { FaTh, FaBars, FaRegUser, FaUserCheck } from 'react-icons/fa';
+import { 
+  FaTh, 
+  FaBars, 
+  FaRegUser, 
+  FaUserCheck
+} from 'react-icons/fa';
 import { TbChecklist } from 'react-icons/tb';
 import { app } from "../../firebaseConfig";
 import { getAuth, signOut } from 'firebase/auth';
@@ -43,7 +49,9 @@ const Nav = ({
   setGridView,
   filterNote,
   searchInput,
-  setSearchInput
+  setSearchInput,
+  showModal,
+  setShowModal
 }) => {
   const {colorMode, toggleColorMode} = useColorMode();
   const auth=getAuth();
@@ -126,21 +134,19 @@ const Nav = ({
         <InputGroup sx={{
           w: ['300px', null, null, null, '320px', '500px']
         }}>
-          <Tooltip hasArrow label='Search' borderRadius={'5px'}>
-            <InputLeftAddon
-              onClick={() => filterNote()} 
-              children={<Search2Icon />} 
-              cursor={'pointer'} 
-            />
-          </Tooltip>
           <Input 
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)} 
             onKeyUp={() => filterNote()}
+            onClick={()=> setShowModal(!showModal)}
             type={'text'} 
             variant={'filled'} 
-            outline={'none'} 
           />
+            <InputRightAddon
+              onClick={()=> setShowModal(!showModal)}
+              children={showModal ? <CloseIcon /> : <Search2Icon />} 
+              cursor={'pointer'} 
+            />
         </InputGroup>
       </Flex>
 
@@ -150,13 +156,14 @@ const Nav = ({
       }}>
         <Tooltip 
           hasArrow 
-          label='Search' 
+          label={showModal ? 'Close' : 'Search'} 
           borderRadius={'5px'}
         >
           <IconButton 
             sx={iconStyle} 
-            icon={<Search2Icon />}
-            display={['flex', null, null, null, 'none']} 
+            icon={showModal ? <CloseIcon /> : <Search2Icon />}
+            display={['flex', null, null, null, 'none']}
+            onClick={() => setShowModal(!showModal)} 
           />
         </Tooltip>
         {location.pathname !== '/todos' && 
@@ -182,7 +189,6 @@ const Nav = ({
             listStyleType: 'none',
             overflow: 'hidden',
           }}>
-            <PopoverBody sx={listStyle}><Text cursor={'pointer'}>Settings</Text></PopoverBody>
             <PopoverBody 
                 sx={listStyle} 
                 onClick={toggleColorMode}
@@ -244,10 +250,10 @@ const Nav = ({
       </Flex>
 
       <Modal
-            initialFocusRef={initialRef} 
-            isOpen={isOpen} 
-            onClose={onClose}
-            motionPreset='slideInBottom'
+          initialFocusRef={initialRef} 
+          isOpen={isOpen} 
+          onClose={onClose}
+          motionPreset='slideInBottom'
         >
             <ModalContent sx={modalStyle}>
                 <ModalHeader sx={{
@@ -255,39 +261,39 @@ const Nav = ({
                     color: '#fff'
                 }}>Send Feedback</ModalHeader>
                 <ModalBody>
-                    <form action="">
+                    <form action="POST" data-netlify='true'>
                         <Textarea 
-                            sx={{
-                                border: 'none',
-                                p: '5px',
-                                height: '150px',
-                                outline: 'none'
-                            }}
-                            variant={'unstyled'}
-                            resize={'none'}
-                            placeholder="Have Feedback? We'd love to hear it, but please don't share sensitive information. Have questions? Try help or support." 
+                          sx={{
+                            border: 'none',
+                            p: '5px',
+                            height: '150px',
+                              outline: 'none'
+                          }}
+                          variant={'unstyled'}
+                          resize={'none'}
+                          placeholder="Have Feedback? We'd love to hear it, but please don't share sensitive information. Have questions? Try help or support." 
                         />
 
                         <Box>
-                            <Text 
-                                sx={{
-                                    fontSize: '.9rem',
-                                    m: '10px 0'
-                                }}
-                            >Some account and system information may be send to KipNote. We will use it to fix problems and inprove our services. We may email you for information or update.</Text>
+                          <Text 
+                              sx={{
+                                  fontSize: '.9rem',
+                                  m: '10px 0'
+                              }}
+                          >Some account and system information may be send to KipNote. We will use it to fix problems and inprove our services. We may email you for information or update.</Text>
                         </Box>
 
                         <button style={{
-                            backgroundColor: '#c5341b',
-                            color: '#fff',
-                            padding: '5px 10px',
-                            fontWeight: '500'
+                          backgroundColor: '#c5341b',
+                          color: '#fff',
+                          padding: '5px 10px',
+                          fontWeight: '500'
                         }} type="submit">Send</button>
                     </form>
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button onClick={onClose}>Cancel</Button>
+                  <Button onClick={onClose}>Cancel</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

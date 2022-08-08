@@ -146,9 +146,6 @@ const NoteInput = ({
             <Tooltip label='Remind me'>
                 <IconButton sx={iconStyle} icon={<BellIcon />} />
             </Tooltip>
-            <Tooltip label='Collaborator'>
-                <IconButton sx={iconStyle} icon={<FaUserPlus />} />
-            </Tooltip>
             <Popover>
                 <PopoverTrigger>
                     <IconButton sx={iconStyle} icon={<FaEllipsisV />} />
@@ -169,9 +166,6 @@ const NoteInput = ({
                     <PopoverBody sx={listStyle} cursor={'pointer'}>Show Checkboxes</PopoverBody>
                 </PopoverContent>
             </Popover>
-            <Tooltip label='Archive'>
-                <IconButton sx={iconStyle} icon={<FaArchive />} />
-            </Tooltip>
         </HStack>
     </Stack>
   )

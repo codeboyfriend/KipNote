@@ -16,10 +16,7 @@ const Archives = ({
   gridView,
   setGridView,
   toggle,
-  pin,
   archive,
-  note,
-  setNote,
   onOpen,
   toggleDelete
 }) => {
@@ -62,10 +59,7 @@ const Archives = ({
                   key={archiveNote.id} 
                   archiveNote={archiveNote}
                   toggle={toggle}
-                  pin={pin}
                   archive={archive}
-                  note={note}
-                  setNote={setNote} 
                   onOpen={onOpen}
                   toggleDelete={toggleDelete} 
                 />)}

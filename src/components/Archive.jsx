@@ -12,18 +12,15 @@ import {
     Flex 
 } from "@chakra-ui/react/";
 import { BellIcon } from "@chakra-ui/icons";
-import { 
-    FaUserPlus, 
+import {  
     FaEllipsisV, 
-    FaArchive 
+    FaArchive,
 } from 'react-icons/fa';
 
 const Archive = ({ 
     archiveNote,
     toggle,
     archive,
-    note,
-    setNote,
     onOpen,
     toggleDelete 
 }) => {    
@@ -57,6 +54,11 @@ const Archive = ({
         overflow: 'hidden'
     }
 
+    const buttonStyle = {
+        bg: 'transparent',
+        border: 'none'
+    }
+
   return (
     <Stack 
         sx={stackStyle}
@@ -73,20 +75,41 @@ const Archive = ({
             </Flex>
 
             <Box sx={textStyle}>{archiveNote.body}</Box>
+
+            {
+                archiveNote.label !== '' ? (
+                    <Flex sx={{
+                        maxW: '60px',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        border: '1px solid',
+                        borderRadius: '8px',
+                        m: '0 10px',
+                        p: '0 5px'
+                    }}>
+                        <Box 
+                            fontSize={'.7rem'}
+                            fontWeight={'500'}
+                        >{archiveNote.label}</Box>
+                        <Text   sx={{
+                            fontSize: '.7rem',
+                            fontWeight: '500',
+                            cursor: 'pointer'
+                        }}>x</Text>
+                    </Flex> 
+                ) : null
+            }
         </Box>
 
         <HStack spacing={[2, null, null, null, 5]}>
             <Tooltip label='Remind me'>
                 <IconButton onClick={() => toggle(archiveNote.id)} sx={iconStyle} icon={<BellIcon />} />
             </Tooltip>
-            <Tooltip label='Collaborator'>
-                <IconButton sx={iconStyle} icon={<FaUserPlus />} />
-            </Tooltip>
             <Popover>
                 <PopoverTrigger>
                     <IconButton sx={iconStyle} icon={<FaEllipsisV />} />
                 </PopoverTrigger>
-                <PopoverContent sx={{
+                <PopoverContent zIndex={3000} sx={{
                     w: '200px',
                     bg: '#1A202C',
                     color: 'white',

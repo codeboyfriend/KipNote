@@ -15,14 +15,14 @@ import {
   import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
   import { useState } from "react";
   import { app } from "../../firebaseConfig";
-  import { getAuth, updateEmail } from "firebase/auth";
+  import { getAuth, updateProfile } from "firebase/auth";
   
   const Update = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const [view, setView] = useState(false);
     const [viewCon, setViewCon] = useState(false);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
   
     const label = {
       fontSize: '1.2rem'
@@ -36,20 +36,15 @@ import {
     const handleSubmit = (e) => {
       e.preventDefault();
   
-      if(password !== passwordCon){
-        setErrorMsg('Passwords do not match')
-      }
-  
-      updateEmail(user, email)
-      .then((response) => console.log(response.user))
-      .catch((err) => alert(err.message))
-  
-      setEmail('');
-      setPassword('');
-      setPasswordCon('');
+      updateProfile(auth.currentUser, {
+        email: email, password: password
+      }).then(() => {
+        alert('Profile Updated');
+        navigate('/')
+      }).catch((error) => {
+        setErrorMsg('An error occur')
+      });
     }
-
-    // console.log(user)
   
     return (
       <Box sx={{

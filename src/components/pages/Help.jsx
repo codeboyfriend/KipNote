@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { 
     Box,
     Text,
@@ -34,15 +34,15 @@ import { FaRegUser, FaUserCheck } from 'react-icons/fa';
 import { TbChecklist } from 'react-icons/tb';
 import { BsFillChatLeftDotsFill } from 'react-icons/bs';
 import { app } from "../../firebaseConfig";
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
 const Help = () => {
+    const auth = getAuth();
+    const navigate = useNavigate();
     const {colorMode, toggleColorMode} = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef(null);
     const bg = useColorModeValue('#fff', '#1a202c');
-    const auth=getAuth();
-    const user = auth.currentUser;
 
     const modalStyle = {
         mt: '100px',
@@ -61,7 +61,13 @@ const Help = () => {
         _hover: {
           bg: 'RGBA(255, 255, 255, 0.24)'
         }
-      }
+    }
+
+    const signOutUser = () => {
+        signOut(auth).then(() => {
+          navigate('/')
+        })
+    }
 
   return (
     <Box>
@@ -117,17 +123,20 @@ const Help = () => {
                         }} 
                     />
                     </PopoverBody>
-                    <PopoverBody>{user.email}</PopoverBody>
+                    <PopoverBody>My Account</PopoverBody>
                     <PopoverBody><Link to={'/update'}><Text sx={{
                     p: '5px',
                     border: '1px solid',
                     borderRadius: '5px'
                     }}>Manage your account</Text></Link></PopoverBody>
-                    <PopoverBody><Link to={'/'}><Text sx={{
-                    p: '5px',
-                    border: '1px solid',
-                    borderRadius: '5px'
-                    }}>Sign Out</Text></Link></PopoverBody>
+                    <PopoverBody cursor={'pointer'}>
+                        <Text onClick={signOutUser} sx={{
+                            p: '5px',
+                            border: '1px solid',
+                            borderRadius: '5px'
+                            }}>Sign Out
+                        </Text>
+                    </PopoverBody>
                 </PopoverContent>
             </Popover>
         </Flex>
@@ -179,7 +188,7 @@ const Help = () => {
         }}>
             <Tooltip 
                 hasArrow 
-                label={colorMode !== 'light' ? 'Enable Dark Mode' : 'Disable Dark Mode'} 
+                label={colorMode === 'light' ? 'Enable Dark Mode' : 'Disable Dark Mode'} 
                 borderRadius={'5px'}
             >
 
@@ -249,7 +258,7 @@ const Help = () => {
                     color: '#fff'
                 }}>Send Feedback</ModalHeader>
                 <ModalBody>
-                    <form action="">
+                    <form action="POST" data-netlify='true'>
                         <Textarea 
                             sx={{
                                 border: 'none',

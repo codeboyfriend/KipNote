@@ -30,6 +30,8 @@ function App() {
   const [labelInput, setLabelInput] = useState('');
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [searchInput, setSearchInput] = useState('');
+  const [filterSearch, setFilterSearch] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('modalContent', JSON.stringify(modalContent))
@@ -44,7 +46,7 @@ function App() {
       pin: true,
       archive: true,
       delete: false,
-      label: 'testing'
+      label: true
     },
     {
       id: 2,
@@ -54,7 +56,7 @@ function App() {
       pin: false,
       archive: false,
       delete: false,
-      label: 'testing'
+      label: false
     },
     {
       id: 3,
@@ -64,7 +66,7 @@ function App() {
       pin: false,
       archive: false,
       delete: false,
-      label: 'testing'
+      label: false
     }
   ]);
 
@@ -116,7 +118,7 @@ function App() {
     setNote(
       note.map((each) => 
       each.id === id ? {...each, label:
-      labelInput} : each
+      !each.label} : each
       )
     )
   }
@@ -163,13 +165,13 @@ function App() {
   }
 
   const filterNote = () => {
-    setAllNote(
+    setFilterSearch(
       note.filter(each => each.title === searchInput ? {
         ...each
       } : null)
     )
   }
-
+  
   const handleAllNote = () => {
     setAllNote(
       note.filter(each => each.archive === false && each.pin === false && each.delete === false ? {
@@ -198,7 +200,7 @@ function App() {
           handleLabel={handleLabel}
           labelhandler={labelhandler}
         />
-        
+
         <Routes>
           <Route path="/home" element={<Note
             note={note}
@@ -224,6 +226,9 @@ function App() {
             setLabelInput={setLabelInput}
             labelhandler={labelhandler}
             filterNote={filterNote}
+            filterSearch={filterSearch}
+            showModal={showModal}
+            setShowModal={setShowModal}
           />} />
 
           <Route path="/todos" element={<TodoPage
@@ -243,15 +248,12 @@ function App() {
           />} />
 
           <Route path="/archive" element={<Archives
-            note={note}
-            setNote={setNote} 
             side={side}
             setSide={setSide}
             archiveNotes={archiveNotes}
             gridView={gridView}
             setGridView={setGridView}
             toggle={toggleReminder}
-            pin={togglePin}
             archive={toggleArchive}
             toggleDelete={toggleDelete}
             onOpen={onOpen}

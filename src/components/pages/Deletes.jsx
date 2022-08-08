@@ -75,7 +75,7 @@ import {
           deleteNotes.length > 0 ? (
             <Box sx={{
                 w: ['70%', null, null, '55%', '50%'],
-                mt: '120px',
+                mt: '50px',
                 transition: 'margin .2s',
             }} ml={side ? ['90px', null, null, null, '180px'] : ['90px', null, null, '220px', '350px']}>
               <Box 

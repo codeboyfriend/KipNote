@@ -66,14 +66,16 @@ const Delete = ({
                 <IconButton 
                     onClick={() => handleDeleteNote(deleteNote.id)}
                     sx={iconStyle} 
-                    icon={<TbTrashX />} 
+                    icon={<TbTrashX />}
+                    fontSize={'1.5rem'} 
                 />
             </Tooltip>
             <Tooltip label='Restore'>
                 <IconButton 
                     onClick={() => toggleDelete(deleteNote.id)} 
                     sx={iconStyle} 
-                    icon={<MdRestoreFromTrash />} 
+                    icon={<MdRestoreFromTrash />}
+                    fontSize={'1.5rem'}  
                 />
             </Tooltip>
         </HStack>

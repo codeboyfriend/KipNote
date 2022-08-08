@@ -14,15 +14,12 @@ import {
 import { BellIcon } from "@chakra-ui/icons";
 import { 
     FaThumbtack, 
-    FaUserPlus, 
     FaEllipsisV, 
     FaArchive 
 } from 'react-icons/fa';
 
 const PinNote = ({ 
     pinNote,
-    note,
-    setNote,
     buttonStyle,
     textStyle,
     iconStyle,
@@ -61,14 +58,35 @@ const PinNote = ({
             </Flex>
 
             <Box sx={textStyle}>{pinNote.body}</Box>
+
+            {
+                PinNote.label !== '' ? (
+                    <Flex sx={{
+                        maxW: '60px',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        border: '1px solid',
+                        borderRadius: '8px',
+                        m: '0 10px',
+                        p: '0 5px'
+                    }}>
+                        <Box 
+                            fontSize={'.7rem'}
+                            fontWeight={'500'}
+                        >{pinNote.label}</Box>
+                        <Text   sx={{
+                            fontSize: '.7rem',
+                            fontWeight: '500',
+                            cursor: 'pointer'
+                        }}>x</Text>
+                    </Flex> 
+                ) : null
+            }
         </Box>
 
         <HStack spacing={[2, null, null, null, 5]}>
             <Tooltip label='Remind me'>
                 <IconButton onClick={() => toggle(pinNote.id)} sx={iconStyle} icon={<BellIcon />} />
-            </Tooltip>
-            <Tooltip label='Collaborator'>
-                <IconButton sx={iconStyle} icon={<FaUserPlus />} />
             </Tooltip>
             <Popover>
                 <PopoverTrigger>
