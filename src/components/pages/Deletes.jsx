@@ -54,12 +54,11 @@ import {
         <Flex sx={{
                 mt: '120px',
                 transition: 'margin .2s',
-                textAlign: 'center',
                 justifyContent: 'center',
                 alignItem: 'center'
             }} ml={['80px', null, null, null, 0]}>
           <Text fontSize={['.9rem', null, null, '1rem']}>
-            Notes in Trash are deleted after 7 days. 
+             
             <span 
               onClick={() => emptyTrash()} 
               style={{
@@ -102,7 +101,7 @@ import {
                 gap: '20px',
                 mt: '100px',
                 transition: 'margin .2s'
-            }} ml={side ? ['90px', null, null, null, '180px'] : ['90px', null, null, '220px', '350px']}>
+            }} ml={['100px', null, null, null, '10px']}>
                 <IconButton sx={noStyle} icon={<FaArchive />} />
                 <Text sx={{
                     mt: '50px',

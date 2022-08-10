@@ -2,25 +2,28 @@ import {
   Box,
   Text,
   IconButton, 
-  Flex 
+  Flex, 
 } from "@chakra-ui/react";
-import { FaArchive } from 'react-icons/fa'
-import Archive from "../Archive";
+import { BellIcon } from "@chakra-ui/icons";
+import Reminder from "../Reminder";
 import Nav from "../utils/Nav";
 import Sidebar from "../utils/Sidebar";
 
-const Archives = ({ 
+const Reminders = ({
   side, 
   setSide,
-  archiveNotes, 
+  reminderNotes, 
   gridView,
   setGridView,
   toggle,
   archive,
   onOpen,
   toggleDelete,
-  deleteLabel,
-  deleteReminder
+  labelhandler,
+  setReminder,
+  reminderhandler,
+  deleteReminder,
+  deleteLabel
 }) => {
   const noStyle = {
     fontSize: ['7rem', null, '8rem', null,  '10rem'],
@@ -30,7 +33,7 @@ const Archives = ({
       cursor: 'auto'
     }   
   }
-
+  
   return (
     <Box>
       <Nav 
@@ -46,7 +49,7 @@ const Archives = ({
       /> 
 
       {
-        archiveNotes.length > 0 ? (
+        reminderNotes.length > 0 ? (
           <Box sx={{
               w: ['70%', null, null, '55%', '50%'],
               mt: '120px',
@@ -57,15 +60,18 @@ const Archives = ({
               gridTemplateColumns={'repeat(2, 1fr)'}
               gap={'10px'}
               >
-                {archiveNotes.map(archiveNote => <Archive 
-                  key={archiveNote.id} 
-                  archiveNote={archiveNote}
+                {reminderNotes.map(reminderNote => <Reminder 
+                  key={reminderNote.id} 
+                  reminderNote={reminderNote}
                   toggle={toggle}
                   archive={archive}
                   onOpen={onOpen}
-                  toggleDelete={toggleDelete} 
-                  deleteLabel={deleteLabel}
-                deleteReminder={deleteReminder}
+                  toggleDelete={toggleDelete}
+                  labelhandler={labelhandler}
+                  setReminder={setReminder}
+                  reminderhandler={reminderhandler}
+                  deleteReminder={deleteReminder}
+                  deleteLabel={deleteLabel} 
                 />)}
               </Box>
           </Box>
@@ -80,11 +86,11 @@ const Archives = ({
               gap: '20px',
               transition: 'margin .2s'
           }} ml={['100px', null, null, null, '10px']}>
-              <IconButton sx={noStyle} icon={<FaArchive />} />
+              <IconButton sx={noStyle} icon={<BellIcon />} />
               <Text sx={{
                   mt: '50px',
                   fontSize: ['1rem', null, null, '1.2rem', '1.5rem']
-              }}>Your archived notes appear here</Text>
+              }}>Notes with upcoming reminders appear here</Text>
           </Flex>
         )
       }
@@ -92,4 +98,4 @@ const Archives = ({
   )
 }
 
-export default Archives
+export default Reminders

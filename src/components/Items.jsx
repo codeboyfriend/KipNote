@@ -21,7 +21,12 @@ const Items = ({
     archive,
     onOpen,
     allNote,
-    toggleDelete
+    toggleDelete,
+    labelhandler,
+    reminder,
+    setReminder,
+    deleteLabel,
+    deleteReminder
 }) => {
     const noStyle = {
         fontSize: ['7rem', null, '8rem', null,  '10rem'],
@@ -56,6 +61,11 @@ const Items = ({
                 archive={archive}
                 onOpen={onOpen} 
                 toggleDelete={toggleDelete}
+                labelhandler={labelhandler}
+                reminder={reminder}
+                setReminder={setReminder}
+                deleteLabel={deleteLabel}
+                deleteReminder={deleteReminder}
             />
             ))}
         </Box>

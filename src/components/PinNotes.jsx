@@ -15,7 +15,10 @@ const PinNotes = ({
   pin,
   archive,
   onOpen,
-  toggleDelete 
+  toggleDelete,
+  labelhandler,
+  deleteLabel,
+  deleteReminder 
 }) => {
   return pinNotes.length > 0 ? (
     <Box mb={'50px'}>
@@ -39,7 +42,10 @@ const PinNotes = ({
           pin={pin}
           archive={archive}
           onOpen={onOpen}
-          toggleDelete={toggleDelete} 
+          toggleDelete={toggleDelete}
+          labelhandler={labelhandler} 
+          deleteLabel={deleteLabel}
+          deleteReminder={deleteReminder}
         />)}
       </Box>
     </Box>

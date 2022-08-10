@@ -22,7 +22,9 @@ const Archive = ({
     toggle,
     archive,
     onOpen,
-    toggleDelete 
+    toggleDelete,
+    deleteLabel,
+    deleteReminder 
 }) => {    
     const textStyle ={
         minH: '30px',
@@ -54,11 +56,6 @@ const Archive = ({
         overflow: 'hidden'
     }
 
-    const buttonStyle = {
-        bg: 'transparent',
-        border: 'none'
-    }
-
   return (
     <Stack 
         sx={stackStyle}
@@ -76,29 +73,62 @@ const Archive = ({
 
             <Box sx={textStyle}>{archiveNote.body}</Box>
 
-            {
-                archiveNote.label !== '' ? (
-                    <Flex sx={{
-                        maxW: '60px',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        border: '1px solid',
-                        borderRadius: '8px',
-                        m: '0 10px',
-                        p: '0 5px'
-                    }}>
-                        <Box 
-                            fontSize={'.7rem'}
-                            fontWeight={'500'}
-                        >{archiveNote.label}</Box>
-                        <Text   sx={{
-                            fontSize: '.7rem',
-                            fontWeight: '500',
-                            cursor: 'pointer'
-                        }}>x</Text>
-                    </Flex> 
-                ) : null
-            }
+            <Flex>
+                {
+                    archiveNote.label !== '' ? (
+                        <Flex sx={{
+                            minW: '60px',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            bg: '#f0f0f0',
+                            color: '#000',
+                            borderRadius: '10px',
+                            m: '0 10px',
+                            p: '4px 7px'
+                        }}>
+                            <Box 
+                                fontSize={'.7rem'}
+                                fontWeight={'500'}
+                                marginRight={'5px'}
+                            >{archiveNote.label}</Box>
+                            <Tooltip hasArrow label='remove label'>
+                                <Text   sx={{
+                                    fontSize: '.7rem',
+                                    fontWeight: '500',
+                                    cursor: 'pointer'
+                                }} onClick={() => deleteLabel(archiveNote.id)}>x</Text>
+                            </Tooltip>
+                        </Flex> 
+                    ) : null
+                }
+
+                {
+                    archiveNote.reminderText !== '' ? (
+                        <Flex sx={{
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            bg: '#f0f0f0',
+                            color: '#000',
+                            borderRadius: '10px',
+                            m: '0 10px',
+                            p: '4px 7px'
+                        }}>
+                            <Box 
+                                fontSize={'.7rem'}
+                                fontWeight={'500'}
+                                marginRight={'5px'}
+                            >{archiveNote.reminderText}</Box>
+                            <Tooltip label='delete reminder' hasArrow>
+                                <Text   sx={{
+                                    fontSize: '.7rem',
+                                    fontWeight: '500',
+                                    cursor: 'pointer',
+                                }} onClick={() => deleteReminder(archiveNote.id)}>x</Text>
+                            </Tooltip>
+                        </Flex>
+                    ) : null
+                }
+            </Flex>
         </Box>
 
         <HStack spacing={[2, null, null, null, 5]}>
@@ -126,8 +156,6 @@ const Archive = ({
                         cursor={'pointer'}>
                             <Text onClick={onOpen}>Add Label</Text>
                     </PopoverBody>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}>Add Drawing</PopoverBody>
-                    <PopoverBody sx={listStyle} cursor={'pointer'}>Show Checkboxes</PopoverBody>
                 </PopoverContent>
             </Popover>
             <Tooltip label='Unarchive'>

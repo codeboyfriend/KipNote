@@ -35,7 +35,11 @@ const Note = ({
     filterNote,
     filterSearch,
     showModal,
-    setShowModal 
+    setShowModal,
+    reminder,
+    setReminder,
+    deleteLabel,
+    deleteReminder 
 }) => {
     const auth = getAuth();
 
@@ -110,19 +114,13 @@ const Note = ({
         }} ml={side ? ['90px', null, null, null, '180px'] : ['90px', null, null, '220px', '350px']}>
             <NoteInput
                 note={note} 
-                side={side}
                 setNote={setNote}
                 buttonStyle={buttonStyle}
-                iconStyle={iconStyle}
-                listStyle={listStyle} 
                 stackStyle={stackStyle}
                 title={title}
                 body={body}
                 setTitle={setTitle}
                 setBody={setBody}
-                onOpen={onOpen}
-                labelInput={labelInput}
-                setLabelInput={setLabelInput}
             />
 
             <PinNotes
@@ -143,7 +141,11 @@ const Note = ({
                 onOpen={onOpen}
                 labelInput={labelInput}
                 setLabelInput={setLabelInput}
-                labelhandler={labelhandler} 
+                labelhandler={labelhandler}
+                reminder={reminder}
+                setReminder={setReminder}
+                deleteLabel={deleteLabel}
+                deleteReminder={deleteReminder} 
             />
 
             <Search
@@ -179,6 +181,11 @@ const Note = ({
                 archive={archive}
                 toggleDelete={toggleDelete}
                 onOpen={onOpen} 
+                labelhandler={labelhandler}
+                reminder={reminder}
+                setReminder={setReminder}
+                deleteLabel={deleteLabel}
+                deleteReminder={deleteReminder}
             />
         </Box>
     </Box>

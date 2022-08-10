@@ -59,6 +59,48 @@ const Delete = ({
             </Flex>
 
             <Box sx={textStyle}>{deleteNote.body}</Box>
+
+            <Flex>
+                {
+                    deleteNote.label !== '' ? (
+                        <Flex sx={{
+                            minW: '60px',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            bg: '#f0f0f0',
+                            color: '#000',
+                            borderRadius: '10px',
+                            m: '0 10px',
+                            p: '4px 7px'
+                        }}>
+                            <Box 
+                                fontSize={'.7rem'}
+                                fontWeight={'500'}
+                            >{deleteNote.label}</Box>
+                        </Flex> 
+                    ) : null
+                }
+
+                {
+                    deleteNote.reminderText !== '' ? (
+                        <Flex sx={{
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            bg: '#f0f0f0',
+                            color: '#000',
+                            borderRadius: '10px',
+                            m: '0 10px',
+                            p: '4px 7px'
+                        }}>
+                            <Box 
+                                fontSize={'.7rem'}
+                                fontWeight={'500'}
+                                marginRight={'5px'}
+                            >{deleteNote.reminderText}</Box>
+                        </Flex>
+                    ) : null
+                }
+            </Flex>
         </Box>
 
         <HStack spacing={[2, null, null, null, 5]}>

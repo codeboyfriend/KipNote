@@ -12,6 +12,7 @@ import Login from "./components/pages/Login";
 import ForgotPass from "./components/pages/ForgotPass";
 import Update from "./components/pages/Update";
 import Help from "./components/pages/Help";
+import Reminders from "./components/pages/Reminders";
 
 function App() {
   const [side, setSide] = useState(true);
@@ -21,6 +22,7 @@ function App() {
   const [pinNotes, setPinNotes] = useState([]);
   const [archiveNotes, setArchiveNotes] = useState([]);
   const [deleteNotes, setDeleteNotes] = useState([]);
+  const [reminderNotes, setReminderNotes] = useState([]);
   const [modalInput, setModalInput] = useState('');
   const [modalContent, setModalContent] = useState(
     () => JSON.parse(localStorage.getItem('modalContent')) || []
@@ -32,6 +34,7 @@ function App() {
   const [searchInput, setSearchInput] = useState('');
   const [filterSearch, setFilterSearch] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [reminder, setReminder] = useState('');
 
   useEffect(() => {
     localStorage.setItem('modalContent', JSON.stringify(modalContent))
@@ -46,7 +49,8 @@ function App() {
       pin: true,
       archive: true,
       delete: false,
-      label: true
+      label: '',
+      reminderText: ''
     },
     {
       id: 2,
@@ -56,7 +60,8 @@ function App() {
       pin: false,
       archive: false,
       delete: false,
-      label: false
+      label: '',
+      reminderText: ''
     },
     {
       id: 3,
@@ -66,7 +71,8 @@ function App() {
       pin: false,
       archive: false,
       delete: false,
-      label: false
+      label: '',
+      reminderText: ''
     }
   ]);
 
@@ -118,7 +124,34 @@ function App() {
     setNote(
       note.map((each) => 
       each.id === id ? {...each, label:
-      !each.label} : each
+      labelInput} : each
+      )
+    )
+  }
+
+  const deleteLabel = (id) => {
+    setNote(
+      note.map((each) => 
+      each.id === id ? {...each, label:
+      ''} : each
+      )
+    )
+  }
+
+  const reminderhandler = (id) => {
+    setNote(
+      note.map((each) => 
+      each.id === id ? {...each, reminderText:
+      reminder} : each
+      )
+    )
+  }
+
+  const deleteReminder = (id) => {
+    setNote(
+      note.map((each) => 
+      each.id === id ? {...each, reminderText:
+      ''} : each
       )
     )
   }
@@ -151,6 +184,14 @@ function App() {
     )
   }
 
+  const handleReminder = () => {
+    setReminderNotes(
+      note.filter(each => each.reminder === true && each.delete === false ? {
+        ...each
+      } : null)
+    )
+  }
+
   setInterval(() => {
     deleteNotes.shift()
   }, 604800000);
@@ -166,7 +207,7 @@ function App() {
 
   const filterNote = () => {
     setFilterSearch(
-      note.filter(each => each.title === searchInput ? {
+      note.filter(each => each.title.toLowerCase() === searchInput.toLowerCase() ? {
         ...each
       } : null)
     )
@@ -183,6 +224,7 @@ function App() {
   useEffect(() => {
     handlePinNote();
     handleArchive();
+    handleReminder();
     handleDeleteNote();
     handleAllNote();
   }, [note])
@@ -229,6 +271,10 @@ function App() {
             filterSearch={filterSearch}
             showModal={showModal}
             setShowModal={setShowModal}
+            reminder={reminder}
+            setReminder={setReminder}
+            deleteLabel={deleteLabel}
+            deleteReminder={deleteReminder}
           />} />
 
           <Route path="/todos" element={<TodoPage
@@ -245,6 +291,25 @@ function App() {
             searchInput={searchInput}
             setSearchInput={setSearchInput}
             filterNote={filterNote}
+            deleteLabel={deleteLabel}
+            deleteReminder={deleteReminder}
+          />} />
+
+          <Route path="/reminder" element={<Reminders 
+            reminderNotes={reminderNotes}
+            side={side}
+            setSide={setSide}
+            gridView={gridView}
+            setGridView={setGridView}
+            toggle={toggleReminder}
+            archive={toggleArchive}
+            toggleDelete={toggleDelete}
+            onOpen={onOpen}
+            labelhandler={labelhandler}
+            reminderhandler={reminderhandler}
+            setReminder={setReminder}
+            deleteLabel={deleteLabel}
+            deleteReminder={deleteReminder}
           />} />
 
           <Route path="/archive" element={<Archives
@@ -257,6 +322,8 @@ function App() {
             archive={toggleArchive}
             toggleDelete={toggleDelete}
             onOpen={onOpen}
+            deleteLabel={deleteLabel}
+            deleteReminder={deleteReminder}
           />} />
 
           <Route path='/trash' element={<Deletes 

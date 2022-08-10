@@ -76,7 +76,7 @@ const Nav = ({
     p: '5px 10px',
 
     _hover: {
-      bg: 'RGBA(255, 255, 255, 0.24)'
+      bg: 'orange'
     }
   }
 
@@ -130,42 +130,47 @@ const Nav = ({
         </Link>
       </Flex>
 
-      <Flex display= {['none', null, null, null, 'flex']}>
-        <InputGroup sx={{
-          w: ['300px', null, null, null, '320px', '500px']
-        }}>
-          <Input 
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)} 
-            onKeyUp={() => filterNote()}
-            onClick={()=> setShowModal(!showModal)}
-            type={'text'} 
-            variant={'filled'} 
-          />
-            <InputRightAddon
+      {
+        location.pathname === '/home' &&
+        <Flex display= {['none', null, null, null, 'flex']}>
+          <InputGroup sx={{
+            w: ['300px', null, null, null, '320px', '500px']
+          }}>
+            <Input 
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)} 
+              onKeyUp={() => filterNote()}
               onClick={()=> setShowModal(!showModal)}
-              children={showModal ? <CloseIcon /> : <Search2Icon />} 
-              cursor={'pointer'} 
+              type={'text'} 
+              variant={'filled'} 
             />
-        </InputGroup>
-      </Flex>
+              <InputRightAddon
+                onClick={()=> setShowModal(!showModal)}
+                children={showModal ? <CloseIcon /> : <Search2Icon />} 
+                cursor={'pointer'} 
+              />
+          </InputGroup>
+        </Flex>
+      }
 
       <Flex sx={{
         alignItems: 'center',
         gap: '5px'
       }}>
-        <Tooltip 
-          hasArrow 
-          label={showModal ? 'Close' : 'Search'} 
-          borderRadius={'5px'}
-        >
-          <IconButton 
-            sx={iconStyle} 
-            icon={showModal ? <CloseIcon /> : <Search2Icon />}
-            display={['flex', null, null, null, 'none']}
-            onClick={() => setShowModal(!showModal)} 
-          />
-        </Tooltip>
+        {location.pathname === '/home' &&
+          <Tooltip 
+            hasArrow 
+            label={showModal ? 'Close' : 'Search'} 
+            borderRadius={'5px'}
+          >
+            <IconButton 
+              sx={iconStyle} 
+              icon={showModal ? <CloseIcon /> : <Search2Icon />}
+              display={['flex', null, null, null, 'none']}
+              onClick={() => setShowModal(!showModal)} 
+            />
+          </Tooltip>
+        }
         {location.pathname !== '/todos' && 
         <Tooltip hasArrow label={gridView ? 'List View' : 'Grid View'} borderRadius={'5px'}>
             <IconButton 
@@ -182,12 +187,12 @@ const Nav = ({
               icon={<SettingsIcon />} 
             />
           </PopoverTrigger>
-          <PopoverContent sx={{
+          <PopoverContent bg={bg} sx={{
             w: '200px',
-            bg: '#1A202C',
-            color: 'white',
-            listStyleType: 'none',
             overflow: 'hidden',
+            border: 'none',
+            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)',
+            overflow: 'hidden'
           }}>
             <PopoverBody 
                 sx={listStyle} 
