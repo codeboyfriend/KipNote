@@ -18,6 +18,7 @@ import { app } from "../../firebaseConfig";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
+    const myApp = app;
     const auth = getAuth();
     const [view, setView] = useState(false);
     const [loginEmail, setLoginEmail] = useState('');
@@ -38,6 +39,7 @@ const Login = () => {
         })
         .catch((err) => {
             setError('An error occur')
+            console.log(myApp)
         })
 
         setLoginEmail('');

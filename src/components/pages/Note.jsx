@@ -42,17 +42,19 @@ const Note = ({
     deleteReminder,
     setFilterSearch 
 }) => {
+    const myApp = app;
     const auth = getAuth();
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
               const uid = user.uid;
+              console.log(uid)
             } else {
-              console.log('an error occur')
+              console.log(myApp)
             }
         });
-    }, [])
+    })
 
     const buttonStyle = {
         bg: 'transparent',

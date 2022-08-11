@@ -46,6 +46,7 @@ import { app } from "../../firebaseConfig";
 import { getAuth, signOut } from 'firebase/auth';
 
 const Help = () => {
+    const myApp = app;
     const auth = getAuth();
     const navigate = useNavigate();
     const {colorMode, toggleColorMode} = useColorMode();
@@ -84,6 +85,7 @@ const Help = () => {
         signOut(auth).then(() => {
           navigate('/')
         })
+        .cath(() => console.log(myApp))
     }
 
     const help = () => {

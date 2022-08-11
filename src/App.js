@@ -197,7 +197,7 @@ function App() {
     handleReminder();
     handleDeleteNote();
     handleAllNote();
-  }, [note])
+  }) // eslint-disable-next-line
  
   return (
     <Router>

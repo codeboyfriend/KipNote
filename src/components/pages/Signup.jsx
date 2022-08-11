@@ -18,6 +18,7 @@ import { app } from "../../firebaseConfig";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Signup = () => {
+  const myApp = app;
   const auth = getAuth();
   const [view, setView] = useState(false);
   const [viewCon, setViewCon] = useState(false);
@@ -45,6 +46,7 @@ const Signup = () => {
     })
     .catch((err) => {
       setErrorMsg('Failed to create an account')
+      console.log(myApp)
     })
 
     setEmail('');

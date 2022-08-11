@@ -18,6 +18,7 @@ import {
   import { getAuth, updateProfile } from "firebase/auth";
   
   const Update = () => {
+    const myApp = app;
     const auth = getAuth();
     const user = auth.currentUser;
     const [view, setView] = useState(false);
@@ -43,6 +44,7 @@ import {
         navigate('/')
       }).catch((error) => {
         setErrorMsg('An error occur')
+        console.log(myApp)
       });
     }
   

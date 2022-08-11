@@ -54,6 +54,7 @@ const Nav = ({
   setShowModal,
   setFilterSearch
 }) => {
+  const myApp = app;
   const {colorMode, toggleColorMode} = useColorMode();
   const auth=getAuth();
   const user = auth.currentUser;
@@ -106,6 +107,7 @@ const Nav = ({
     signOut(auth).then(() => {
       navigate('/')
     })
+    .catch(() => console.log(myApp))
   }
 
   return (

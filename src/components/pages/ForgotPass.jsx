@@ -15,6 +15,7 @@ import { app } from "../../firebaseConfig";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const ForgotPass = () => {
+    const myApp = app;
     const auth = getAuth();
     const [forgotPassword, setForgotPassword] = useState('');
     const[msg, setMsg] = useState('');
@@ -30,6 +31,7 @@ const ForgotPass = () => {
         })
         .catch((err) => {
             setMsg('Wrong Entries')
+            console.log(myApp)
         })
 
         setForgotPassword('');
