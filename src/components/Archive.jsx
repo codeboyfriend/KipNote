@@ -9,7 +9,8 @@ import {
     PopoverBody,
     IconButton,
     HStack,
-    Flex 
+    Flex,
+    useToast, 
 } from "@chakra-ui/react/";
 import { BellIcon } from "@chakra-ui/icons";
 import {  
@@ -25,7 +26,55 @@ const Archive = ({
     toggleDelete,
     deleteLabel,
     deleteReminder 
-}) => {    
+}) => { 
+    const toast = useToast();
+
+    const handleToast = () => {
+        archiveNote.reminder === false ? toast({
+          title: '',
+          description: 'Added to reminders',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) : toast({
+            title: '',
+            description: 'Removed from reminders',
+            status: 'success',
+            duration: '2000',
+            position: 'bottom-left'
+          })  
+    }
+
+    const labelToast = () => {
+        toast({
+          title: '',
+          description: 'Label removed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const reminderToast = () => {
+        toast({
+          title: '',
+          description: 'Reminder deleted',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const archiveToast = () => {
+        toast({
+          title: '',
+          description: 'Note unarchived',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
     const textStyle ={
         minH: '30px',
         padding: '10px',
@@ -73,7 +122,10 @@ const Archive = ({
 
             <Box sx={textStyle}>{archiveNote.body}</Box>
 
-            <Flex>
+            <Flex sx={{
+                flexDir: ['column', null, null, 'row'],
+                gap: '5px'
+            }}>
                 {
                     archiveNote.label !== '' ? (
                         <Flex sx={{
@@ -96,7 +148,10 @@ const Archive = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer'
-                                }} onClick={() => deleteLabel(archiveNote.id)}>x</Text>
+                                }} onClick={() => {
+                                    labelToast()
+                                    deleteLabel(archiveNote.id)
+                                }}>x</Text>
                             </Tooltip>
                         </Flex> 
                     ) : null
@@ -123,7 +178,10 @@ const Archive = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer',
-                                }} onClick={() => deleteReminder(archiveNote.id)}>x</Text>
+                                }} onClick={() => {
+                                    reminderToast()
+                                    deleteReminder(archiveNote.id)
+                                }}>x</Text>
                             </Tooltip>
                         </Flex>
                     ) : null
@@ -133,7 +191,10 @@ const Archive = ({
 
         <HStack spacing={[2, null, null, null, 5]}>
             <Tooltip label='Remind me'>
-                <IconButton onClick={() => toggle(archiveNote.id)} sx={iconStyle} icon={<BellIcon />} />
+                <IconButton onClick={() => {
+                    handleToast()
+                    toggle(archiveNote.id)
+                }} sx={iconStyle} icon={<BellIcon />} />
             </Tooltip>
             <Popover>
                 <PopoverTrigger>
@@ -159,7 +220,10 @@ const Archive = ({
                 </PopoverContent>
             </Popover>
             <Tooltip label='Unarchive'>
-                <IconButton onClick={() => archive(archiveNote.id)} sx={iconStyle} icon={<FaArchive />} />
+                <IconButton onClick={() => {
+                    archiveToast()
+                    archive(archiveNote.id)
+                }} sx={iconStyle} icon={<FaArchive />} />
             </Tooltip>
         </HStack>
     </Stack>

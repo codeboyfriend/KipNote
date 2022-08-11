@@ -39,7 +39,7 @@ const Sidebar = ({ side, onOpen }) => {
         padding: '20px 0',
         boxShadow: '1px 2px 5px #000',
         transition: 'width .2s',
-        zIndex: '100'   
+        zIndex: '5'   
     }} 
         w= {side ? '80px' : ['200px', null, null, null, '200px']}
        

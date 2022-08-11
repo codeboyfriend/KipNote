@@ -7,8 +7,8 @@ import {
     Flex,
     useToast
 } from "@chakra-ui/react/";
-import { CheckIcon } from "@chakra-ui/icons";;
-import React, { useRef } from "react";
+import { CheckIcon } from "@chakra-ui/icons";
+import { useRef } from "react";
 
 const NoteInput = ({
     buttonStyle,
@@ -50,11 +50,11 @@ const NoteInput = ({
     
     const handleSubmit = () => {
         title === '' && toast({
-          title: 'No Title',
+          title: '',
           description: 'Enter all necessary entries',
           status: 'warning',
           duration: '2000',
-          isClosable: true
+          position: 'bottom-left'
         }) 
     }
 

@@ -39,7 +39,8 @@ const Note = ({
     reminder,
     setReminder,
     deleteLabel,
-    deleteReminder 
+    deleteReminder,
+    setFilterSearch 
 }) => {
     const auth = getAuth();
 
@@ -99,6 +100,7 @@ const Note = ({
             filterNote={filterNote}
             showModal={showModal}
             setShowModal={setShowModal}
+            setFilterSearch={setFilterSearch}
         />
 
         <Sidebar 
@@ -164,6 +166,7 @@ const Note = ({
                 searchInput={searchInput}
                 setSearchInput={setSearchInput}
                 filterNote={filterNote}
+                setFilterSearch={setFilterSearch}
             />
 
             <Items 

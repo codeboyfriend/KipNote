@@ -275,6 +275,7 @@ function App() {
             setReminder={setReminder}
             deleteLabel={deleteLabel}
             deleteReminder={deleteReminder}
+            setFilterSearch={setFilterSearch}
           />} />
 
           <Route path="/todos" element={<TodoPage

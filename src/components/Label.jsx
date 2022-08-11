@@ -6,13 +6,13 @@ import {
     ModalHeader,
     ModalFooter,
     ModalBody,
-    ModalCloseButton,
     Input,
     InputGroup,
     InputLeftAddon,
     InputRightAddon,
     FormControl,
-    Button
+    Button,
+    Tooltip
 } from "@chakra-ui/react";
 import { CheckIcon, SmallCloseIcon, DeleteIcon } from "@chakra-ui/icons";
 import { CgTag } from 'react-icons/cg';
@@ -24,8 +24,7 @@ const Label = ({
     setModalInput,
     modalContent,
     setModalContent,
-    handleLabel,
-    labelhandler 
+    handleLabel 
 }) => {
     const initialRef = useRef(null);
     const modalStyle = {
@@ -60,16 +59,17 @@ const Label = ({
         >
             <ModalContent sx={modalStyle}>
                 <ModalHeader>Edit Label</ModalHeader>
-                <ModalCloseButton />
                 <ModalBody>
                     <FormControl>
                         <InputGroup>
-                            <InputLeftAddon
-                                onClick={() => setModalInput('')}
-                                sx={addOnStyle}
-                                pl={0}
-                                children={<SmallCloseIcon />} 
-                            />
+                            <Tooltip label='Cancel'>
+                                <InputLeftAddon
+                                    onClick={() => setModalInput('')}
+                                    sx={addOnStyle}
+                                    pl={0}
+                                    children={<SmallCloseIcon />} 
+                                />
+                            </Tooltip>
                                 <Input 
                                     type={'text'}
                                     ref={initialRef} 
@@ -78,12 +78,14 @@ const Label = ({
                                     value={modalInput}
                                     onChange={(e) => setModalInput(e.target.value)} 
                                 />
-                            <InputRightAddon
-                                onClick={handleAddContent}
-                                sx={addOnStyle}
-                                pr={0}
-                                children={<CheckIcon />} 
-                            />
+                            <Tooltip label='Create label'>
+                                <InputRightAddon
+                                    onClick={handleAddContent}
+                                    sx={addOnStyle}
+                                    pr={0}
+                                    children={<CheckIcon />} 
+                                />
+                            </Tooltip>
                         </InputGroup>
                     </FormControl>
 
@@ -104,14 +106,16 @@ const Label = ({
                                         defaultValue={content.text}
                                         cursor={'pointer'}
                                     />
-                                <InputRightAddon
-                                    onClick={() => {
-                                        setModalContent(modalContent.filter(el => el.id !== content.id))
-                                    }}
-                                    sx={addOnStyle}
-                                    pr={0}
-                                    children={<DeleteIcon />} 
-                                />
+                                <Tooltip label='Delete label'>
+                                    <InputRightAddon
+                                        onClick={() => {
+                                            setModalContent(modalContent.filter(el => el.id !== content.id))
+                                        }}
+                                        sx={addOnStyle}
+                                        pr={0}
+                                        children={<DeleteIcon />} 
+                                    />
+                                </Tooltip>
                             </InputGroup>
                         </Box>
                     ))}

@@ -16,8 +16,8 @@ import {
   } from "@chakra-ui/react";
   import { 
     BellIcon,
-    Search2Icon,
-    CloseIcon
+    CloseIcon,
+    Search2Icon
   } from "@chakra-ui/icons";
   import { 
     FaThumbtack,
@@ -40,7 +40,8 @@ const Search = ({
     showModal,
     searchInput,
     setSearchInput,
-    filterNote
+    filterNote,
+    setFilterSearch
 }) => {
     const searchModal = {
         w: '100%',
@@ -52,7 +53,7 @@ const Search = ({
         gap: '20px',
         top: 0,
         left: 0,
-        bg: 'rgba(0, 0, 0, 0.9)',
+        bg: 'rgba(50, 50, 50, 0.9)',
         color: '#fff',
         pt: '100px',
         zIndex: '100'
@@ -62,8 +63,6 @@ const Search = ({
     <Box 
         sx={searchModal}
         display= {showModal ? 'flex' : 'none'}
-        // overflowX={'hidden'}
-        // overflowY={'scroll'}
     >
         <Flex display= {['flex', null, null, null, 'none']}>
             <InputGroup sx={{
@@ -77,12 +76,15 @@ const Search = ({
                 variant={'outline'} 
             />
                 <InputRightAddon
-                onClick={() => filterNote()}
+                onClick={() => {
+                    setSearchInput('')
+                    setFilterSearch('')
+                }}
                 sx={{
                     bg: '#fff',
                     color: '#000'
                 }}
-                children={showModal ? <CloseIcon /> : <Search2Icon />} 
+                children={ searchInput === '' ? <Search2Icon /> : <CloseIcon />} 
                 cursor={'pointer'} 
                 />
             </InputGroup>
@@ -219,7 +221,7 @@ const Search = ({
                     bg: '#fff',
                     color: '#000'
                 }}
-                children={<Search2Icon />} 
+                children={searchInput === '' ? <Search2Icon /> : <CloseIcon />} 
                 cursor={'pointer'} 
                 />
             </InputGroup>

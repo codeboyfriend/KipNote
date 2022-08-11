@@ -14,7 +14,8 @@ import {
     Flex, 
     Input,
     PopoverFooter,
-    useColorModeValue
+    useColorModeValue,
+    useToast
 } from "@chakra-ui/react/";
 import { BellIcon, PlusSquareIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import {  
@@ -37,6 +38,37 @@ const Reminder = ({
     const bg = useColorModeValue('#fff', '#1a202c');
     const [time, setTime] = useState('');
     const [date, setDate] = useState('');
+    const toast = useToast();
+
+    const handleToast = () => {
+        toast({
+          title: '',
+          description: 'Removed from reminders',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const labelToast = () => {
+        toast({
+          title: '',
+          description: 'Label removed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const reminderToast = () => {
+        toast({
+          title: '',
+          description: 'Reminder deleted',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
 
     const textStyle ={
         minH: '30px',
@@ -90,14 +122,20 @@ const Reminder = ({
                     <IconButton
                         sx={iconStyle} 
                         icon={<SmallCloseIcon />}
-                        onClick={() => toggle(reminderNote.id)}
+                        onClick={() => {
+                            toggle(reminderNote.id)
+                            handleToast()
+                        }}
                     />
                 </Tooltip>
             </Flex>
 
             <Box sx={textStyle}>{reminderNote.body}</Box>
 
-            <Flex>
+            <Flex sx={{
+                flexDir: ['column', null, null, 'row'],
+                gap: '5px'
+            }}>
                 {
                     reminderNote.label !== '' ? (
                         <Flex sx={{
@@ -120,7 +158,11 @@ const Reminder = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer'
-                                }} onClick={() => deleteLabel(reminderNote.id)}>x</Text>
+                                }} onClick={() => {
+                                    labelToast()
+                                    deleteLabel(reminderNote.id)
+                                }
+                                }>x</Text>
                             </Tooltip>
                         </Flex> 
                     ) : null
@@ -147,7 +189,10 @@ const Reminder = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer'
-                                }} onClick={() => deleteReminder(reminderNote.id)}>x</Text>
+                                }} onClick={() => {
+                                    reminderToast()
+                                    deleteReminder(reminderNote.id)
+                                }}>x</Text>
                             </Tooltip>
                         </Flex>
                     ) : null
@@ -234,8 +279,17 @@ const Reminder = ({
                         </Popover>
                     </PopoverBody>
                     <PopoverFooter>
-                        <button onClick={() => setReminder(`${date} ${time}`)}>Save</button>
-                        <button onClick={() => reminderhandler(reminderNote.id)}>Add</button>
+                        <button style={{
+                            backgroundColor: '#f0f0f0',
+                            color: '#000',
+                            padding: '5px 8px'
+                        }} onClick={() => setReminder(`${date} ${time}`)}>Select</button>
+                        <button style={{
+                            backgroundColor: '#f0f0f0',
+                            color: '#000',
+                            padding: '5px 8px',
+                            marginLeft: '65px'
+                        }} onClick={() => reminderhandler(reminderNote.id)}>Save</button>
                     </PopoverFooter>
                 </PopoverContent>
             </Popover>

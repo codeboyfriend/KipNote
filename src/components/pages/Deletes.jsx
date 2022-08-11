@@ -4,7 +4,7 @@ import {
     IconButton, 
     Flex, 
   } from "@chakra-ui/react";
-  import { FaArchive } from 'react-icons/fa'
+  import { DeleteIcon } from "@chakra-ui/icons";
   import Delete from "../Delete";
   import Nav from "../utils/Nav";
   import Sidebar from "../utils/Sidebar";
@@ -102,11 +102,11 @@ import {
                 mt: '100px',
                 transition: 'margin .2s'
             }} ml={['100px', null, null, null, '10px']}>
-                <IconButton sx={noStyle} icon={<FaArchive />} />
+                <IconButton sx={noStyle} icon={<DeleteIcon />} />
                 <Text sx={{
                     mt: '50px',
                     fontSize: ['1rem', null, null, '1.2rem', '1.5rem']
-                }}>Your deleted notes appear here</Text>
+                }}>No notes in Trash</Text>
             </Flex>
           )
         }

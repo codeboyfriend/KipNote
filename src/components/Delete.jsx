@@ -5,7 +5,8 @@ import {
     Tooltip,
     IconButton,
     HStack,
-    Flex 
+    Flex,
+    useToast 
 } from "@chakra-ui/react/";
 import { MdRestoreFromTrash } from 'react-icons/md';
 import { TbTrashX } from 'react-icons/tb';
@@ -15,7 +16,9 @@ const Delete = ({
     toggleDelete,
     note,
     setNote
-}) => {    
+}) => { 
+    const toast = useToast();
+
     const textStyle ={
         minH: '30px',
         padding: '10px',
@@ -41,6 +44,16 @@ const Delete = ({
     const handleDeleteNote = (id) => {
         setNote(note.filter(deleteNote => deleteNote.id !== id))
         console.log('delete', id)
+    }
+
+    const restoreToast = () => {
+        toast({
+          title: '',
+          description: 'Note restored',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
     }
 
   return (
@@ -114,7 +127,10 @@ const Delete = ({
             </Tooltip>
             <Tooltip label='Restore'>
                 <IconButton 
-                    onClick={() => toggleDelete(deleteNote.id)} 
+                    onClick={() => {
+                        restoreToast()
+                        toggleDelete(deleteNote.id)
+                    }} 
                     sx={iconStyle} 
                     icon={<MdRestoreFromTrash />}
                     fontSize={'1.5rem'}  

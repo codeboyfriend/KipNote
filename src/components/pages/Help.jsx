@@ -23,7 +23,12 @@ import {
     Textarea,
     useColorMode,
     useColorModeValue,
-    useDisclosure 
+    useDisclosure,
+    Accordion,
+    AccordionItem,
+    AccordionButton,
+    AccordionPanel,
+    AccordionIcon 
 } from "@chakra-ui/react";
 import { 
     MoonIcon,
@@ -106,9 +111,11 @@ const Help = () => {
                     icon={<FaRegUser />} 
                     />
                 </PopoverTrigger>
-                <PopoverContent sx={{
+                <PopoverContent bg={bg} sx={{
                     textAlign: 'center',
-                    w: '280px'
+                    w: '250px',
+                    border: 'none',
+                    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)'
                 }}>
                     <PopoverBody fontSize={'3rem'}>
                     <IconButton 
@@ -142,7 +149,7 @@ const Help = () => {
         </Flex>
 
         <Flex sx={{
-            h: '80vh',
+            h: '60vh',
             w: ['300px', null, null, '400px'],
             m: '0 auto',
             flexDir: 'column',
@@ -169,7 +176,7 @@ const Help = () => {
             <InputGroup mt={'10px'} >
                 <Input 
                     type={'text'} 
-                    placeholder='Drop your issue'
+                    placeholder='Describe your issue'
                     p={'10px 5px'}
                 />
                 <InputRightAddon 
@@ -179,9 +186,131 @@ const Help = () => {
             </InputGroup>
         </Flex>
 
+        <Box>
+            <Accordion allowToggle sx={{
+                width: '80%',
+                m: '0 auto'
+            }}>
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton
+                           _expanded={{
+                            color: '#ffbb29'
+                        }}
+                        >
+                            <Box flex={1} textAlign={'left'}>
+                                Get started with KipNote
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} pl={'50px'}>
+                        <ul>
+                            <li>Create a note</li>
+                            <li>Make a list of todos</li>
+                            <li>Label or pin notes</li>
+                            <li>Archive notes</li>
+                            <li>Set up reminders for the notes</li>
+                            <li>Mark completed todos</li>
+                        </ul>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton
+                            _expanded={{
+                                color: '#ffbb29'
+                            }}
+                        >
+                            <Box flex={1} textAlign={'left'}>
+                                Create and edit notes and todos
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} pl={'50px'}>
+                        <ul>
+                            <li>On your computer, go to kipNote.netlify.app</li>
+                            <li>At the top, Click <b>Take a note</b></li>
+                            <li>Enter your note and click <b>Save</b></li>
+                        </ul>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton
+                            _expanded={{
+                                color: '#ffbb29'
+                            }}
+                        >
+                            <Box flex={1} textAlign={'left'}>
+                                Pin notes
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} pl={'50px'}>
+                        <ul>
+                            <li>On your computer, go to kipNote.netlify.app</li>
+                            <li>Tap the note that you want to pin</li>
+                            <li>Tap Pin note</li>
+                        </ul>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton
+                            _expanded={{
+                                color: '#ffbb29'
+                            }}
+                        >
+                            <Box flex={1} textAlign={'left'}>
+                                Add to Archive
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} pl={'50px'}>
+                        <ul>
+                            <li>On your computer, go to kipNote.netlify.app</li>
+                            <li>Tap the note that you want to pin</li>
+                            <li>Tap Archive</li>
+                        </ul>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton
+                            _expanded={{
+                                color: '#ffbb29'
+                            }}
+                        >
+                            <Box flex={1} textAlign={'left'}>
+                                Set reminders
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} pl={'50px'}>
+                        <ul>
+                            <li>On your computer, go to kipNote.netlify.app</li>
+                            <li>Click on a note</li>
+                            <li>At the bottom left, click Remind me</li>
+                            <li>At the top left of kipNote, click Menu <b>Reminders</b></li>
+                            <li>You can set reminders to go off at a certain time or date</li>
+                        </ul>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
+        </Box>
+
         <Flex sx={{
             w: '80%',
-            m: '0 auto',
+            m: '30px auto',
             justifyContent: 'flex-end',
             alignItems: 'center',
             gap: '20px'
@@ -228,8 +357,8 @@ const Help = () => {
                 </PopoverTrigger>
                 <PopoverContent sx={{
                     w: '250px',
-                    bg: '#1A202C',
-                    color: 'white'
+                    border: 'none',
+                    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)'
                 }}>
                     <PopoverBody cursor={'auto'}>Send Feedback on...</PopoverBody>
                     <PopoverBody

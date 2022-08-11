@@ -9,7 +9,8 @@ import {
     PopoverBody,
     IconButton,
     HStack,
-    Flex
+    Flex,
+    useToast
 } from "@chakra-ui/react/";
 import { BellIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { 
@@ -34,6 +35,53 @@ const Item = ({
     deleteLabel,
     deleteReminder
 }) => {
+    const toast = useToast();
+
+    const handleToast = () => {
+        each.reminder === false ? toast({
+          title: '',
+          description: 'Added to reminders',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) : toast({
+            title: '',
+            description: 'Removed from reminders',
+            status: 'success',
+            duration: '2000',
+            position: 'bottom-left'
+          })  
+    }
+
+    const labelToast = () => {
+        toast({
+          title: '',
+          description: 'Label removed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const reminderToast = () => {
+        toast({
+          title: '',
+          description: 'Reminder deleted',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const archiveToast = () => {
+        toast({
+          title: '',
+          description: 'Note archived',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
 
   return (
     <Stack 
@@ -63,7 +111,10 @@ const Item = ({
 
             <Box sx={textStyle}>{each.body}</Box>
 
-            <Flex>
+            <Flex sx={{
+                flexDir: ['column', null, null, 'row'],
+                gap: '5px'
+            }}>
                 {
                     each.label !== '' ? (
                         <Flex sx={{
@@ -86,7 +137,10 @@ const Item = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer'
-                                }} onClick={() => deleteLabel(each.id)}>x</Text>
+                                }} onClick={() => {
+                                    labelToast()
+                                    deleteLabel(each.id)
+                                }}>x</Text>
                             </Tooltip>
                         </Flex> 
                     ) : null
@@ -113,7 +167,10 @@ const Item = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer',
-                                }} onClick={() => deleteReminder(each.id)}>x</Text>
+                                }} onClick={() => {
+                                    reminderToast()
+                                    deleteReminder(each.id)
+                                }}>x</Text>
                             </Tooltip>
                         </Flex>
                     ) : null
@@ -123,7 +180,10 @@ const Item = ({
 
         <HStack spacing={[2, null, null, null, 5]}>
             <Tooltip label='Remind me'>
-                <IconButton onClick={() => toggle(each.id)} sx={iconStyle} icon={<BellIcon />} />
+                <IconButton onClick={() => {
+                    handleToast()
+                    toggle(each.id)
+                }} sx={iconStyle} icon={<BellIcon />} />
             </Tooltip>
             <Popover>
                 <PopoverTrigger>
@@ -153,7 +213,10 @@ const Item = ({
                 <IconButton onClick={() => labelhandler(each.id)} sx={iconStyle} icon={<PlusSquareIcon />} />
             </Tooltip>
             <Tooltip label={each.archive ? 'Unarchive' : 'Archive'}>
-                <IconButton onClick={() => archive(each.id)} sx={iconStyle} icon={<FaArchive />} />
+                <IconButton onClick={() => {
+                    archiveToast()
+                    archive(each.id)
+                }} sx={iconStyle} icon={<FaArchive />} />
             </Tooltip>
         </HStack>
     </Stack>

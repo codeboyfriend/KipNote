@@ -9,7 +9,8 @@ import {
     PopoverBody,
     IconButton,
     HStack,
-    Flex 
+    Flex,
+    useToast 
 } from "@chakra-ui/react/";
 import { 
     BellIcon,
@@ -37,6 +38,64 @@ const PinNote = ({
     deleteLabel,
     deleteReminder 
 }) => {
+    const toast = useToast();
+
+    const handleToast = () => {
+        pinNote.reminder === false ? toast({
+          title: '',
+          description: 'Added to reminders',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) : toast({
+            title: '',
+            description: 'Removed from reminders',
+            status: 'success',
+            duration: '2000',
+            position: 'bottom-left'
+          })  
+    }
+
+    const labelToast = () => {
+        toast({
+          title: '',
+          description: 'Label removed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const reminderToast = () => {
+        toast({
+          title: '',
+          description: 'Reminder deleted',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const archiveToast = () => {
+        toast({
+          title: '',
+          description: 'Note archived',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const trashToast = () => {
+        toast({
+          title: '',
+          description: 'Note trashed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
   return (
     <Stack 
         sx={stackStyle}
@@ -65,7 +124,10 @@ const PinNote = ({
 
             <Box sx={textStyle}>{pinNote.body}</Box>
 
-            <Flex>
+            <Flex sx={{
+                flexDir: ['column', null, null, 'row'],
+                gap: '5px'
+            }}>
                 {
                     pinNote.label !== '' ? (
                         <Flex sx={{
@@ -88,7 +150,10 @@ const PinNote = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer'
-                                }} onClick={() => deleteLabel(pinNote.id)}>x</Text>
+                                }} onClick={() => {
+                                    labelToast()
+                                    deleteLabel(pinNote.id)
+                                }}>x</Text>
                             </Tooltip>
                         </Flex> 
                     ) : null
@@ -115,7 +180,10 @@ const PinNote = ({
                                     fontSize: '.7rem',
                                     fontWeight: '500',
                                     cursor: 'pointer',
-                                }} onClick={() => deleteReminder(pinNote.id)}>x</Text>
+                                }} onClick={() => {
+                                    reminderToast()
+                                    deleteReminder(pinNote.id)
+                                }}>x</Text>
                             </Tooltip>
                         </Flex>
                     ) : null
@@ -125,7 +193,10 @@ const PinNote = ({
 
         <HStack spacing={[2, null, null, null, 5]}>
             <Tooltip label='Remind me'>
-                <IconButton onClick={() => toggle(pinNote.id)} sx={iconStyle} icon={<BellIcon />} />
+                <IconButton onClick={() => {
+                    handleToast()
+                    toggle(pinNote.id)
+                }} sx={iconStyle} icon={<BellIcon />} />
             </Tooltip>
             <Popover>
                 <PopoverTrigger>
@@ -139,7 +210,10 @@ const PinNote = ({
                     overflow: 'hidden'
                 }}>
                     <PopoverBody 
-                        onClick={() => toggleDelete(pinNote.id)} 
+                        onClick={() =>{
+                            trashToast()
+                            toggleDelete(pinNote.id)
+                        }} 
                         sx={listStyle} cursor={'pointer'}>Delete note
                     </PopoverBody>
                     <PopoverBody 
@@ -153,7 +227,10 @@ const PinNote = ({
                 <IconButton onClick={() => labelhandler(pinNote.id)} sx={iconStyle} icon={<PlusSquareIcon />} />
             </Tooltip>
             <Tooltip label={pinNote.archive ? 'Unarchive' : 'Archive'}>
-                <IconButton onClick={() => archive(pinNote.id)} sx={iconStyle} icon={<FaArchive />} />
+                <IconButton onClick={() => {
+                    archiveToast()
+                    archive(pinNote.id)
+                }} sx={iconStyle} icon={<FaArchive />} />
             </Tooltip>
         </HStack>
     </Stack>

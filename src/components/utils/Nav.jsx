@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Flex, 
@@ -51,7 +51,8 @@ const Nav = ({
   searchInput,
   setSearchInput,
   showModal,
-  setShowModal
+  setShowModal,
+  setFilterSearch
 }) => {
   const {colorMode, toggleColorMode} = useColorMode();
   const auth=getAuth();
@@ -60,6 +61,25 @@ const Nav = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const navigate = useNavigate();
+  const [feedbackMsg, setFeedbackMsg] = useState('');
+  const [allMsg, setAllMsg] = useState([
+    {
+      id: 1,
+      msg: 'We love your service'
+    }
+  ]);
+
+  const message = () => {
+    feedbackMsg !== '' && setAllMsg([
+      ...allMsg, 
+      {
+        id: Math.floor(Math.random() * 1000),
+        msg: feedbackMsg
+      }
+    ]);
+
+    setFeedbackMsg('');
+  }
 
   const modalStyle = {
     mt: '100px',
@@ -140,34 +160,44 @@ const Nav = ({
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)} 
               onKeyUp={() => filterNote()}
-              onClick={()=> setShowModal(!showModal)}
+              onClick={()=> setShowModal(true)}
               type={'text'} 
               variant={'filled'} 
             />
-              <InputRightAddon
-                onClick={()=> setShowModal(!showModal)}
-                children={showModal ? <CloseIcon /> : <Search2Icon />} 
-                cursor={'pointer'} 
-              />
+              <Tooltip label={showModal ? 'Clear search' : 'Search'}>
+                <InputRightAddon
+                  onClick={()=> {
+                    setShowModal(!showModal)
+                    setSearchInput('')
+                    setFilterSearch('')
+                  }}
+                  children={showModal ? <CloseIcon /> : <Search2Icon />} 
+                  cursor={'pointer'} 
+                />
+              </Tooltip>
           </InputGroup>
         </Flex>
       }
 
       <Flex sx={{
         alignItems: 'center',
-        gap: '5px'
+        gap: [0, null, null, '5px']
       }}>
         {location.pathname === '/home' &&
           <Tooltip 
             hasArrow 
-            label={showModal ? 'Close' : 'Search'} 
+            label={showModal ? 'Clear search' : 'Search'} 
             borderRadius={'5px'}
           >
             <IconButton 
               sx={iconStyle} 
               icon={showModal ? <CloseIcon /> : <Search2Icon />}
               display={['flex', null, null, null, 'none']}
-              onClick={() => setShowModal(!showModal)} 
+              onClick={() => {
+                setShowModal(!showModal)
+                setSearchInput('')
+                setFilterSearch('')
+              }} 
             />
           </Tooltip>
         }
@@ -191,8 +221,7 @@ const Nav = ({
             w: '200px',
             overflow: 'hidden',
             border: 'none',
-            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)',
-            overflow: 'hidden'
+            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)'
           }}>
             <PopoverBody 
                 sx={listStyle} 
@@ -266,7 +295,7 @@ const Nav = ({
                     color: '#fff'
                 }}>Send Feedback</ModalHeader>
                 <ModalBody>
-                    <form action="POST" data-netlify='true'>
+                    <form action="POST">
                         <Textarea 
                           sx={{
                             border: 'none',
@@ -276,6 +305,8 @@ const Nav = ({
                           }}
                           variant={'unstyled'}
                           resize={'none'}
+                          value={feedbackMsg}
+                          onChange={(e) => setFeedbackMsg(e.target.value)}
                           placeholder="Have Feedback? We'd love to hear it, but please don't share sensitive information. Have questions? Try help or support." 
                         />
 
@@ -288,7 +319,10 @@ const Nav = ({
                           >Some account and system information may be send to KipNote. We will use it to fix problems and inprove our services. We may email you for information or update.</Text>
                         </Box>
 
-                        <button style={{
+                        <button onClick={(e) => {
+                          e.preventDefault();
+                          message()
+                        }} style={{
                           backgroundColor: '#c5341b',
                           color: '#fff',
                           padding: '5px 10px',
