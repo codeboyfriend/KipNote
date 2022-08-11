@@ -26,7 +26,7 @@ const Sidebar = ({ side, onOpen }) => {
         cursor: 'pointer',
         pl: '20px',
         _hover: {
-            bg: '#8d6e2c'
+            bg: 'orange'
         }
     }
 

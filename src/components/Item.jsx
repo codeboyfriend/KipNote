@@ -10,7 +10,8 @@ import {
     IconButton,
     HStack,
     Flex,
-    useToast
+    useToast,
+    useColorModeValue
 } from "@chakra-ui/react/";
 import { BellIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { 
@@ -36,6 +37,7 @@ const Item = ({
     deleteReminder
 }) => {
     const toast = useToast();
+    const bg = useColorModeValue('#fff', '#1a202c');
 
     const handleToast = () => {
         each.reminder === false ? toast({
@@ -77,6 +79,26 @@ const Item = ({
         toast({
           title: '',
           description: 'Note archived',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const trashToast = () => {
+        toast({
+          title: '',
+          description: 'Note trashed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const addLabel = () => {
+        toast({
+          title: '',
+          description: 'Label added',
           status: 'success',
           duration: '2000',
           position: 'bottom-left'
@@ -191,14 +213,17 @@ const Item = ({
                 </PopoverTrigger>
                 <PopoverContent sx={{
                     w: '200px',
-                    bg: '#1A202C',
-                    color: 'white',
-                    listStyleType: 'none',
+                    bg: bg,
                     overflow: 'hidden',
-                    zIndex: '1000'
+                    zIndex: '1000',
+                    border: 'none',
+                    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)'
                 }}>
                     <PopoverBody 
-                        onClick={() => toggleDelete(each.id)} 
+                        onClick={() => {
+                            trashToast()
+                            toggleDelete(each.id)
+                        }} 
                         sx={listStyle} 
                         cursor={'pointer'}>Delete note
                     </PopoverBody>
@@ -210,7 +235,14 @@ const Item = ({
                 </PopoverContent>
             </Popover>
             <Tooltip label={'Add Selected label'}>
-                <IconButton onClick={() => labelhandler(each.id)} sx={iconStyle} icon={<PlusSquareIcon />} />
+                <IconButton 
+                onClick={() => {
+                    addLabel()
+                    labelhandler(each.id)
+                }} 
+                sx={iconStyle} 
+                icon={<PlusSquareIcon />} 
+            />
             </Tooltip>
             <Tooltip label={each.archive ? 'Unarchive' : 'Archive'}>
                 <IconButton onClick={() => {

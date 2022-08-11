@@ -8,7 +8,6 @@ import {
     useToast
 } from "@chakra-ui/react/";
 import { CheckIcon } from "@chakra-ui/icons";
-import { useRef } from "react";
 
 const NoteInput = ({
     buttonStyle,
@@ -20,17 +19,9 @@ const NoteInput = ({
     note,
     setNote 
 }) => {
-    const boxElement = useRef();
     const toast = useToast();
 
-    const textStyle ={
-        minH: '30px',
-        padding: '10px',
-        outline: 'none',
-        fontSize: '.9rem'
-    }
-
-    const handleAddNote = (e) => {
+    const handleAddNote = () => {
         title !== '' && setNote([
             ...note,
             {
@@ -40,7 +31,9 @@ const NoteInput = ({
                 pin: false, 
                 archive: false,
                 delete: false, 
-                id: Math.floor(Math.random() * 1000) 
+                id: Math.floor(Math.random() * 1000),
+                label: '',
+                reminderText: '' 
             }
         ]);
 
@@ -49,13 +42,19 @@ const NoteInput = ({
     }
     
     const handleSubmit = () => {
-        title === '' && toast({
+        title === '' ? toast({
           title: '',
           description: 'Enter all necessary entries',
           status: 'warning',
           duration: '2000',
           position: 'bottom-left'
-        }) 
+        }) : toast({
+            title: '',
+            description: 'Note added',
+            status: 'success',
+            duration: '2000',
+            position: 'bottom-left'
+          })
     }
 
   return (
@@ -83,17 +82,19 @@ const NoteInput = ({
                     />
                 </Tooltip>
             </Flex>
-            
-            <Box 
-                sx={textStyle} 
-                ref={boxElement} 
-                label={"Testing"}
-                onKeyUp={(e) => setBody(boxElement.current?.innerText)} 
-                contentEditable>Take Note...
-            </Box>
 
-            {/* <textarea height={'fit-content'}></textarea> */}
-            {/* <input type="text"  height={'fit-content'}/> */}
+            <textarea placeholder="Take Note..."
+                value={body}
+                onChange={(e) => setBody((e.target.value))}  
+                style={{
+                    height: 'fit-content',
+                    width: '100%',
+                    minH: '30px',
+                    padding: '10px',
+                    outline: 'none',
+                    fontSize: '.9rem'
+                }}>
+            </textarea>
         </Box>
     </Stack>
   )

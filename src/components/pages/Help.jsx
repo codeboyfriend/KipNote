@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { 
     Box,
@@ -9,6 +9,7 @@ import {
     Tooltip,
     Input,
     InputRightAddon, 
+    InputLeftAddon,
     InputGroup,
     Popover,
     PopoverTrigger,
@@ -28,12 +29,15 @@ import {
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    AccordionIcon 
+    AccordionIcon,
+    useToast 
 } from "@chakra-ui/react";
 import { 
     MoonIcon,
     SunIcon,
-    CheckIcon
+    CheckIcon,
+    CloseIcon,
+    Search2Icon
   } from "@chakra-ui/icons";
 import { FaRegUser, FaUserCheck } from 'react-icons/fa';
 import { TbChecklist } from 'react-icons/tb';
@@ -46,8 +50,16 @@ const Help = () => {
     const navigate = useNavigate();
     const {colorMode, toggleColorMode} = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const toast = useToast();
     const initialRef = useRef(null);
     const bg = useColorModeValue('#fff', '#1a202c');
+    const [input, setInput] = useState('');
+    const [issue, setIssue] = useState([
+        {
+            id: 1,
+            body: 'Having problem on how to set reminders'
+        }
+    ]);
 
     const modalStyle = {
         mt: '100px',
@@ -72,6 +84,29 @@ const Help = () => {
         signOut(auth).then(() => {
           navigate('/')
         })
+    }
+
+    const help = () => {
+        input !== '' && setIssue([
+            ...issue, 
+            {
+              id: Math.floor(Math.random() * 1000),
+              body: input
+            }
+          ]);
+      
+          setInput('');
+    }
+
+    const issueToast = () => {
+        toast({
+          title: '',
+          description: 'Your issue will be attend to in the next 24hrs',
+          status: 'success',
+          duration: '5000',
+          position: 'bottom-left',
+          isClosable: true
+        }) 
     }
 
   return (
@@ -174,14 +209,25 @@ const Help = () => {
                 mb: '.5rem'
             }}>How can we help you?</Text>
             <InputGroup mt={'10px'} >
+                <InputLeftAddon 
+                    children={<Search2Icon />} 
+                    cursor={'pointer'}
+                    onClick={() => {
+                        help()
+                        issueToast()
+                    }}
+                />
                 <Input 
                     type={'text'} 
                     placeholder='Describe your issue'
                     p={'10px 5px'}
+                    value= {input}
+                    onChange={(e) => setInput(e.target.value)}
                 />
                 <InputRightAddon 
-                    children={<CheckIcon />} 
-                    cursor={'pointer'} 
+                    children={input === '' ? <CheckIcon /> : <CloseIcon />} 
+                    cursor={'pointer'}
+                    onClick={() => setInput('')} 
                 />
             </InputGroup>
         </Flex>
@@ -224,14 +270,14 @@ const Help = () => {
                             }}
                         >
                             <Box flex={1} textAlign={'left'}>
-                                Create and edit notes and todos
+                                Create notes and todos
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4} pl={'50px'}>
                         <ul>
-                            <li>On your computer, go to kipNote.netlify.app</li>
+                            <li>On your computer, go to KipNote.netlify.app</li>
                             <li>At the top, Click <b>Take a note</b></li>
                             <li>Enter your note and click <b>Save</b></li>
                         </ul>
@@ -253,7 +299,7 @@ const Help = () => {
                     </h2>
                     <AccordionPanel pb={4} pl={'50px'}>
                         <ul>
-                            <li>On your computer, go to kipNote.netlify.app</li>
+                            <li>On your computer, go to KipNote.netlify.app</li>
                             <li>Tap the note that you want to pin</li>
                             <li>Tap Pin note</li>
                         </ul>
@@ -275,8 +321,8 @@ const Help = () => {
                     </h2>
                     <AccordionPanel pb={4} pl={'50px'}>
                         <ul>
-                            <li>On your computer, go to kipNote.netlify.app</li>
-                            <li>Tap the note that you want to pin</li>
+                            <li>On your computer, go to KipNote.netlify.app</li>
+                            <li>Tap the note that you want to add to Archive</li>
                             <li>Tap Archive</li>
                         </ul>
                     </AccordionPanel>
@@ -297,10 +343,10 @@ const Help = () => {
                     </h2>
                     <AccordionPanel pb={4} pl={'50px'}>
                         <ul>
-                            <li>On your computer, go to kipNote.netlify.app</li>
+                            <li>On your computer, go to KipNote.netlify.app</li>
                             <li>Click on a note</li>
                             <li>At the bottom left, click Remind me</li>
-                            <li>At the top left of kipNote, click Menu <b>Reminders</b></li>
+                            <li>At the top left of KipNote, click Menu {'>'} <b>Reminders</b></li>
                             <li>You can set reminders to go off at a certain time or date</li>
                         </ul>
                     </AccordionPanel>

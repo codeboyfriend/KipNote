@@ -77,7 +77,7 @@ const Note = ({
         p: '5px 10px',
     
         _hover: {
-          bg: 'RGBA(255, 255, 255, 0.24)'
+            bg: 'orange'
         }
     }
 

@@ -30,7 +30,7 @@ const Todos = ({ todos, setTodos, side, toggleCompleted }) => {
     </Box>
   ) : (
     <Flex spacing={5} sx={{
-        h: '200px',
+        h: '150px',
         textAlign: 'center',
         flexDir: 'column',
         justifyContent: 'center',

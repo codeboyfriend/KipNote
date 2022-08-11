@@ -10,7 +10,8 @@ import {
     IconButton,
     HStack,
     Flex,
-    useToast 
+    useToast,
+    useColorModeValue 
 } from "@chakra-ui/react/";
 import { 
     BellIcon,
@@ -39,6 +40,7 @@ const PinNote = ({
     deleteReminder 
 }) => {
     const toast = useToast();
+    const bg = useColorModeValue('#fff', '#1a202c');
 
     const handleToast = () => {
         pinNote.reminder === false ? toast({
@@ -90,6 +92,16 @@ const PinNote = ({
         toast({
           title: '',
           description: 'Note trashed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const addLabel = () => {
+        toast({
+          title: '',
+          description: 'Label added',
           status: 'success',
           duration: '2000',
           position: 'bottom-left'
@@ -204,10 +216,10 @@ const PinNote = ({
                 </PopoverTrigger>
                 <PopoverContent sx={{
                     w: '200px',
-                    bg: '#1A202C',
-                    color: 'white',
-                    listStyleType: 'none',
-                    overflow: 'hidden'
+                    bg: bg,
+                    overflow: 'hidden',
+                    border: 'none',
+                    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)'
                 }}>
                     <PopoverBody 
                         onClick={() =>{
@@ -224,7 +236,14 @@ const PinNote = ({
                 </PopoverContent>
             </Popover>
             <Tooltip label={'Add Selected label'}>
-                <IconButton onClick={() => labelhandler(pinNote.id)} sx={iconStyle} icon={<PlusSquareIcon />} />
+                <IconButton 
+                    onClick={() => {
+                        addLabel()
+                        labelhandler(pinNote.id)
+                    }} 
+                    sx={iconStyle} 
+                    icon={<PlusSquareIcon />} 
+                />
             </Tooltip>
             <Tooltip label={pinNote.archive ? 'Unarchive' : 'Archive'}>
                 <IconButton onClick={() => {

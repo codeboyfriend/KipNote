@@ -10,9 +10,10 @@ import {
     IconButton,
     HStack,
     Flex,
-    useToast, 
+    useToast,
+    useColorModeValue 
 } from "@chakra-ui/react/";
-import { BellIcon } from "@chakra-ui/icons";
+import { BellIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import {  
     FaEllipsisV, 
     FaArchive,
@@ -25,9 +26,11 @@ const Archive = ({
     onOpen,
     toggleDelete,
     deleteLabel,
-    deleteReminder 
+    deleteReminder,
+    labelhandler 
 }) => { 
     const toast = useToast();
+    const bg = useColorModeValue('#fff', '#1a202c');
 
     const handleToast = () => {
         archiveNote.reminder === false ? toast({
@@ -75,6 +78,26 @@ const Archive = ({
         }) 
     }
 
+    const trashToast = () => {
+        toast({
+          title: '',
+          description: 'Note trashed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const addLabel = () => {
+        toast({
+          title: '',
+          description: 'Label added',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
     const textStyle ={
         minH: '30px',
         padding: '10px',
@@ -93,7 +116,7 @@ const Archive = ({
         p: '5px 10px',
     
         _hover: {
-          bg: 'RGBA(255, 255, 255, 0.24)'
+          bg: 'orange'
         }
     }
 
@@ -200,25 +223,37 @@ const Archive = ({
                 <PopoverTrigger>
                     <IconButton sx={iconStyle} icon={<FaEllipsisV />} />
                 </PopoverTrigger>
-                <PopoverContent zIndex={3000} sx={{
+                <PopoverContent zIndex={3000} bg={bg} sx={{
                     w: '200px',
-                    bg: '#1A202C',
-                    color: 'white',
-                    listStyleType: 'none',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    border: 'none',
+                    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)'
                 }}>
                     <PopoverBody 
-                        onClick={() => toggleDelete(archiveNote.id)} 
+                        onClick={() => {
+                            trashToast()
+                            toggleDelete(archiveNote.id)
+                        }} 
                         sx={listStyle} 
                         cursor={'pointer'}>Delete note
                     </PopoverBody>
                     <PopoverBody 
                         sx={listStyle} 
                         cursor={'pointer'}>
-                            <Text onClick={onOpen}>Add Label</Text>
+                            <Text onClick={onOpen}>Select Label</Text>
                     </PopoverBody>
                 </PopoverContent>
             </Popover>
+            <Tooltip label={'Add Selected label'}>
+                <IconButton 
+                onClick={() => {
+                    addLabel()
+                    labelhandler(archiveNote.id)
+                }} 
+                sx={iconStyle} 
+                icon={<PlusSquareIcon />} 
+            />
+            </Tooltip>
             <Tooltip label='Unarchive'>
                 <IconButton onClick={() => {
                     archiveToast()

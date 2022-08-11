@@ -70,6 +70,26 @@ const Reminder = ({
         }) 
     }
 
+    const trashToast = () => {
+        toast({
+          title: '',
+          description: 'Note trashed',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
+    const addLabel = () => {
+        toast({
+          title: '',
+          description: 'Label added',
+          status: 'success',
+          duration: '2000',
+          position: 'bottom-left'
+        }) 
+    }
+
     const textStyle ={
         minH: '30px',
         padding: '10px',
@@ -88,7 +108,7 @@ const Reminder = ({
         p: '5px 10px',
     
         _hover: {
-          bg: 'tomato'
+          bg: 'orange'
         }
     }
 
@@ -298,15 +318,17 @@ const Reminder = ({
                 <PopoverTrigger>
                     <IconButton sx={iconStyle} icon={<FaEllipsisV />} />
                 </PopoverTrigger>
-                <PopoverContent zIndex={3000} sx={{
+                <PopoverContent zIndex={3000} bg={bg} sx={{
                     w: '200px',
-                    bg: '#1A202C',
-                    color: 'white',
-                    listStyleType: 'none',
+                    border: 'none',
+                    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.7)',
                     overflow: 'hidden'
                 }}>
                     <PopoverBody 
-                        onClick={() => toggleDelete(reminderNote.id)} 
+                        onClick={() => {
+                            trashToast()
+                            toggleDelete(reminderNote.id)
+                        }} 
                         sx={listStyle} 
                         cursor={'pointer'}>Delete note
                     </PopoverBody>
@@ -318,10 +340,21 @@ const Reminder = ({
                 </PopoverContent>
             </Popover>
             <Tooltip label={'Add Selected label'}>
-                <IconButton onClick={() => labelhandler(reminderNote.id)} sx={iconStyle} icon={<PlusSquareIcon />} />
+                <IconButton 
+                    onClick={() => {
+                        addLabel()
+                        labelhandler(reminderNote.id)
+                    }} 
+                    sx={iconStyle} 
+                    icon={<PlusSquareIcon />} 
+                    />
             </Tooltip>
             <Tooltip label='Unarchive'>
-                <IconButton onClick={() => archive(reminderNote.id)} sx={iconStyle} icon={<FaArchive />} />
+                <IconButton 
+                    onClick={() => archive(reminderNote.id)} 
+                    sx={iconStyle} 
+                    icon={<FaArchive />} 
+                />
             </Tooltip>
         </HStack>
     </Stack>

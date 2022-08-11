@@ -20,7 +20,8 @@ const Archives = ({
   onOpen,
   toggleDelete,
   deleteLabel,
-  deleteReminder
+  deleteReminder,
+  labelhandler
 }) => {
   const noStyle = {
     fontSize: ['7rem', null, '8rem', null,  '10rem'],
@@ -65,7 +66,8 @@ const Archives = ({
                   onOpen={onOpen}
                   toggleDelete={toggleDelete} 
                   deleteLabel={deleteLabel}
-                deleteReminder={deleteReminder}
+                  deleteReminder={deleteReminder}
+                  labelhandler={labelhandler}
                 />)}
               </Box>
           </Box>

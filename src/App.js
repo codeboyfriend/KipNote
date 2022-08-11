@@ -18,7 +18,7 @@ function App() {
   const [side, setSide] = useState(true);
   const [gridView, setGridView] =  useState(false);
   const [title, setTitle] = useState('');
-  const [body, setBody] = useState('Take Note...');
+  const [body, setBody] = useState('');
   const [pinNotes, setPinNotes] = useState([]);
   const [archiveNotes, setArchiveNotes] = useState([]);
   const [deleteNotes, setDeleteNotes] = useState([]);
@@ -40,41 +40,11 @@ function App() {
     localStorage.setItem('modalContent', JSON.stringify(modalContent))
   }, [modalContent]);
 
-  const [note, setNote] = useState([
-    {
-      id: 1,
-      title: 'Firebase',
-      body: 'I started learning firebase three days ago',
-      reminder: true,
-      pin: true,
-      archive: true,
-      delete: false,
-      label: '',
-      reminderText: ''
-    },
-    {
-      id: 2,
-      title: 'Chakra UI',
-      body: 'It is really an amazing CSS framework',
-      reminder: false,
-      pin: false,
-      archive: false,
-      delete: false,
-      label: '',
-      reminderText: ''
-    },
-    {
-      id: 3,
-      title: 'Javascript',
-      body: 'It is one of the top programming language',
-      reminder: false,
-      pin: false,
-      archive: false,
-      delete: false,
-      label: '',
-      reminderText: ''
-    }
-  ]);
+  const [note, setNote] = useState(() => JSON.parse(localStorage.getItem('note')) || []);
+
+  useEffect(() => {
+    localStorage.setItem('note', JSON.stringify(note))
+  }, [note])
 
   const [todos, setTodos] = useState(
     () => JSON.parse(localStorage.getItem('todos')) || []
@@ -325,6 +295,7 @@ function App() {
             onOpen={onOpen}
             deleteLabel={deleteLabel}
             deleteReminder={deleteReminder}
+            labelhandler={labelhandler}
           />} />
 
           <Route path='/trash' element={<Deletes 
