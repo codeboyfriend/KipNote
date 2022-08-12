@@ -89,10 +89,11 @@ const NoteInput = ({
                 style={{
                     height: 'fit-content',
                     width: '100%',
-                    minH: '30px',
+                    minH: '50px',
                     padding: '10px',
                     outline: 'none',
-                    fontSize: '.9rem'
+                    fontSize: '.9rem',
+                    backgroundColor: 'transparent'
                 }}>
             </textarea>
         </Box>

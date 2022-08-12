@@ -8,7 +8,8 @@ import {
     Flex,
     IconButton,
     InputRightAddon, 
-    InputGroup
+    InputGroup,
+    Progress
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { TbChecklist } from 'react-icons/tb';
@@ -25,21 +26,25 @@ const Login = () => {
     const [loginPassword, setLoginPassword] = useState('');
     const navigate = useNavigate();
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false)
 
     const label = {
-        fontSize: '1.2rem'
+      fontSize: '1.2rem'
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
         signInWithEmailAndPassword(auth, loginEmail, loginPassword)
         .then((response) => {
           navigate('/home')
+          setIsLoading(false)
         })
         .catch((err) => {
-            setError('An error occur')
-            console.log(myApp)
+          setIsLoading(false)
+          setError('An error occur')
+          console.log(myApp)
         })
 
         setLoginEmail('');
@@ -84,71 +89,77 @@ const Login = () => {
           <Box sx={{
             border: '1px solid',
             borderRadius: '5px',
-            p: '15px'
+            overflow: 'hidden'
           }}>
-            <Heading sx={{
-              textAlign: 'center',
-              fontWeight: '500',
-              fontSize: '1.8rem',
-              mb: '20px'
-            }}>Login</Heading>
+            {isLoading && <Progress isIndeterminate />}
 
-            {error !== '' ? 
-                <Text sx={{
-                    textAlign: 'center',
-                    bg: 'blue.200',
-                    p: '10px 0',
-                    borderRadius: '5px',
-                    m: '5px 0'
-                }}>{error}</Text> : ''
-            }
-    
-            <form action="" onSubmit={handleSubmit}>
-              <FormControl mb={'1rem'}>
-                <FormLabel sx={label}>Email</FormLabel>
-                <Input 
-                    p={'10px'} 
-                    type={'text'} 
-                    placeholder={'Enter Email'}
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)} 
-                />
-              </FormControl>
-    
-              <FormControl mb={'1rem'}>
-                <FormLabel sx={label}>Password</FormLabel>
-                <InputGroup>
-                    <Input 
-                        p={'10px'} 
-                        type={view ? 'text' : 'password'} 
-                        placeholder={'Enter Password'}
-                        value={loginPassword}
-                        onChange={(e) => setLoginPassword(e.target.value)}  
-                    />
-                    <InputRightAddon
-                      cursor={'pointer'} 
-                      onClick={() => setView(!view)} 
-                      children={view ? <ViewOffIcon /> : <ViewIcon /> } 
-                    />
-                </InputGroup>
-              </FormControl>
-    
-              <button style={{
-                backgroundColor: 'tomato',
-                color: '#fff',
-                width: '100%',
-                padding: '10px 0',
-                borderRadius: '5px',
-                marginTop: '10px',
-                fontWeight: '500'
-              }} type="submit">Login</button>
-            </form>
-
-            <Link to={'/forgot'}><Text sx={{
+            <Box sx={{
+              p: '15px'
+            }}>
+              <Heading sx={{
                 textAlign: 'center',
-                mt: '10px',
-                color: 'blue.200'
-            }}>Forgot Password?</Text></Link>
+                fontWeight: '500',
+                fontSize: '1.8rem',
+                mb: '20px'
+              }}>Login</Heading>
+
+              {error !== '' ? 
+                  <Text sx={{
+                      textAlign: 'center',
+                      bg: 'blue.200',
+                      p: '10px 0',
+                      borderRadius: '5px',
+                      m: '5px 0'
+                  }}>{error}</Text> : ''
+              }
+      
+              <form action="" onSubmit={handleSubmit}>
+                <FormControl mb={'1rem'}>
+                  <FormLabel sx={label}>Email</FormLabel>
+                  <Input 
+                      p={'10px'} 
+                      type={'text'} 
+                      placeholder={'Enter Email'}
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)} 
+                  />
+                </FormControl>
+      
+                <FormControl mb={'1rem'}>
+                  <FormLabel sx={label}>Password</FormLabel>
+                  <InputGroup>
+                      <Input 
+                          p={'10px'} 
+                          type={view ? 'text' : 'password'} 
+                          placeholder={'Enter Password'}
+                          value={loginPassword}
+                          onChange={(e) => setLoginPassword(e.target.value)}  
+                      />
+                      <InputRightAddon
+                        cursor={'pointer'} 
+                        onClick={() => setView(!view)} 
+                        children={view ? <ViewOffIcon /> : <ViewIcon /> } 
+                      />
+                  </InputGroup>
+                </FormControl>
+      
+                <button style={{
+                  backgroundColor: 'tomato',
+                  color: '#fff',
+                  width: '100%',
+                  padding: '10px 0',
+                  borderRadius: '5px',
+                  marginTop: '10px',
+                  fontWeight: '500'
+                }} type="submit">Login</button>
+              </form>
+
+              <Link to={'/forgot'}><Text sx={{
+                  textAlign: 'center',
+                  mt: '10px',
+                  color: 'blue.200'
+              }}>Forgot Password?</Text></Link>
+            </Box>
           </Box>
     
           <Flex sx={{
