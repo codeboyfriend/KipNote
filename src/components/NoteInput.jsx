@@ -87,9 +87,7 @@ const NoteInput = ({
                 value={body}
                 onChange={(e) => setBody((e.target.value))}  
                 style={{
-                    height: 'fit-content',
                     width: '100%',
-                    minH: '50px',
                     padding: '10px',
                     outline: 'none',
                     fontSize: '.9rem',
