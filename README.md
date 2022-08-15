@@ -1,4 +1,4 @@
-##KipNote
+## KipNote
 
 KipNote is a note-taking-app with a todo application for keeping your note and to keep track of your daily todo activities digitally.
 
