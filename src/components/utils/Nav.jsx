@@ -237,7 +237,7 @@ const Nav = ({
               onClick={onOpen}
               sx={listStyle}><Text cursor={'pointer'}>Send Feedback</Text>
             </PopoverBody>
-            <Link to={'/help'}>
+            <Link to={'/help'} target="_blank">
               <PopoverBody sx={listStyle}><Text cursor={'pointer'}>Help</Text></PopoverBody>
             </Link>
           </PopoverContent>
