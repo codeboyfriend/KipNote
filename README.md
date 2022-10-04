@@ -14,7 +14,10 @@ KipNote is a note-taking-app with a todo application for keeping your note and t
 - Click on **Save**
 - You can also check [KipNote Help](KipNote.netlify.app/help)
 
-If you have a suggestion that would make this better, please fork this repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give a star. Thanks again!
+> Contributions 👨‍💻
+- Contributions make the open source community such an amazing place to learn, inspire, and create.
+- Any contributions you make are greatly appreciated.
+- Check out our [contribution guidelines](./CONTRIBUTING.md) for more information.
 
 > Contact
 [Gmail](mailto:mkinggrafix@gmail.com) 
