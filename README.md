@@ -11,7 +11,7 @@ KipNote is a note-taking-app with a todo application for keeping your note and t
 ## How to use KipNote
 > ## For Taking Notes 
 ![Screenshot 2022-10-04 173911](https://user-images.githubusercontent.com/64322004/193818180-e810db9b-a987-4de1-8f53-bc1a7a213fb3.png)
-- Visit [KipNote](KipNote.netlify.app)
+- Visit [KipNote](https://kipnote.netlify.app/)
 ![Screenshot 2022-10-04 173209](https://user-images.githubusercontent.com/64322004/193815810-2e4dff1d-7796-468b-90c9-dbcfd477846f.png)
 - Click on **Take Note...**
 - Click on **Save**
